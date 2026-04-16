@@ -3,14 +3,15 @@
 ## Now
 - Build: B1
 - Milestone: M1
-- Phase: P3
+- Phase: P3 (all phases complete — milestone ready for closeout)
 
 ## Blockers
 - None
 
 ## Recent
-- Staff.ReviewReconciliation — implemented 2 of 3 suggestions (ARIA fixes); deferred duplicate-word handling to BACKLOG
-- Principal.CodeReview — APPROVED M1 (P1+P2+P3) with no required changes; 3 non-blocking suggestions logged
+- PM.AdvancePhase — P3 is the last phase of M1; routing to PM.MilestoneCloseout
+- Human.PhaseApproval — approved (no additional notes)
+- Writer.DocumentationUpdate — updated README.md
 
 ## Next
-- PM.StatusUpdate to close out the phase
+- PM.MilestoneCloseout

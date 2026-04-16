@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Staff.ReviewReconciliation",
+    "action_id": "PM.AdvancePhase",
     "result": "ok",
-    "summary": "Implemented 2 of 3 suggestions (removed role=grid, added ARIA labels); deferred duplicate-word handling to BACKLOG. No re-review needed (cosmetic changes only)."
+    "summary": "P3 is the last phase of M1. Routing to PM.MilestoneCloseout."
   },
 
-  "next_action_id": "PM.StatusUpdate",
+  "next_action_id": "PM.MilestoneCloseout",
 
   "blockers": [],
 

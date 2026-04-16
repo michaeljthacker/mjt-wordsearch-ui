@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### B1-M1-P3 — Grid display & end-to-end integration
+- Built grid renderer (`js/ui.js`): 15×15 HTML table with monospaced letter cells, word bank with flex-wrap layout
+- Wired full create → generate → display flow in `js/app.js` with deterministic seed derivation (`hashWords`)
+- Added puzzle and word bank styling in `css/style.css`
+- Post-review: removed incorrect `role="grid"`, added ARIA labels for accessibility
+
 ### B1-M1-P2 — Generator engine (Python port)
 - Ported word search generator from Python to JS (`js/generator.js`): seeded PRNG (Mulberry32), weighted directional placement, overlap support, random filler, profanity filter (48-word banned list)
 - Generator is deterministic: same word list + seed → identical grid

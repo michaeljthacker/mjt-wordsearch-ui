@@ -1,29 +1,52 @@
 # Word Search Generator
 
-A simple, static web app for creating printable word searches and sharing them via a link — no backend required.
+A static, backend-free web app for creating word search puzzles — enter words, generate a 15×15 grid, and view the result instantly in the browser.
 
 ## What it does
 
-Users enter a list of words and an optional title, then generate a 15×15 word search puzzle. The puzzle is deterministic (same words + seed = same grid every time), so it can be shared as a compact URL that regenerates the exact puzzle client-side. Includes a clean print layout and a solution-reveal toggle.
+Enter a list of words and an optional title, click **Generate**, and get a 15×15 word search puzzle with a word bank. The generator is deterministic: the same word list always produces the identical grid, powered by a seeded PRNG and a hash derived from the input.
 
-## Key features
+## Current features
 
 - **Create** — Enter words (one per line) with an optional title; click Generate
-- **Display** — Rendered 15×15 grid with word bank
-- **Print** — Clean `@media print` layout, hides UI chrome
-- **Share** — Encode puzzle as a URL (`/v1/<code>`) that regenerates client-side
-- **Solve** — Click/drag to highlight words in the grid; correct finds are confirmed and tracked. Toggle to reveal remaining answers
+- **Display** — 15×15 grid of monospaced letter cells with a word bank listing all placed words
+- **Deterministic output** — Same words always produce the same puzzle (seeded via input hash)
+- **Input validation** — Rejects empty lists, words over 15 characters, non-alphabetic input, and banned words with user-facing error messages
+- **Profanity filter** — Filler letters are checked so no banned words appear in any row, column, or diagonal
+
+## Planned features
+
+- Print layout (`@media print`)
+- Share via URL (encode puzzle as a compact link that regenerates client-side)
+- Interactive solve UI (click/drag highlighting, found-word tracking, solution reveal)
 
 ## Tech stack
 
-- HTML / CSS / JavaScript (no frameworks)
-- Deterministic generator ported from Python reference implementation
-- Client-side routing (hash-based or simple SPA)
-- Profanity filter on filler letters
+- HTML / CSS / JavaScript (ES modules, no frameworks or build tools)
+- Deterministic generator ported from the Python reference in `archive/`
+- Seeded PRNG (Mulberry32) for repeatable grid generation
+- Profanity filter using a curated word list
 
 ## Getting started
 
-> Setup instructions will be added once the project scaffolding is in place.
+1. Clone the repository
+2. Serve the project root with any static file server, e.g.:
+   ```bash
+   python -m http.server 3000
+   ```
+3. Open `http://localhost:3000` in a browser
+
+No dependencies to install — the app is plain HTML/CSS/JS.
+
+## Project structure
+
+```
+index.html          — Single-page entry point
+css/style.css       — Layout and typography
+js/app.js           — App entry point, wires form to generator and renderer
+js/ui.js            — DOM helpers: renderPuzzle, showError, clearError
+js/generator.js     — Deterministic word search engine (generate, hashWords)
+```
 
 ## License
 
