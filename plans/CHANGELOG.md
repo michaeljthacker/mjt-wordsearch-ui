@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### B1-M3-P1 — Input validation & edge-case hardening
+- Deduplicated words via `Set` before generation; profanity filter relaxed to allow user-entered words (filter only blocks filler-letter profanity using position-aware cell tracking)
+- Chunked `encodePayload` into 8 KB batches to avoid JS argument-limit risk
+- Added 20-word soft cap with user-facing error message
+
 ## Released
 
 ### B1-M2 — Print, share & solve (2026-04-16)

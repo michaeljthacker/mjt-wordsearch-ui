@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Staff.DraftQuestions",
-    "result": "skipped",
-    "summary": "Path is clear for P1; no blocking questions. All acceptance criteria map to straightforward implementations."
+    "action_id": "PM.StatusUpdate",
+    "result": "ok",
+    "summary": "P1 status recorded; BACKLOG pruned (3 items done), CHANGELOG updated. Routing to PM.AdvancePhase."
   },
 
-  "next_action_id": "Staff.ImplementationExecution",
+  "next_action_id": "PM.AdvancePhase",
 
   "blockers": [],
 

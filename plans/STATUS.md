@@ -2,16 +2,15 @@
 
 ## Now
 - Build: B1
-- Milestone: M3 (approved)
-- Phase: P1 — Input validation & edge-case hardening
+- Milestone: M3
+- Phase: P1 — complete
 
 ## Blockers
 - None
 
 ## Recent
-- Staff.DraftQuestions — skipped (path is clear; all P1 acceptance criteria map to straightforward implementations with no ambiguity)
-- Human.ApproveMilestone — approved M3 plan, no changes requested
-- Principal.MilestonePlan completed — MILESTONE.md drafted for M3 (3 phases: input hardening, visual polish, deploy)
+- PM.StatusUpdate — recorded P1 completion; updated BACKLOG and CHANGELOG
+- Staff.ImplementationExecution — P1 complete: dedup, profanity filter relaxation, encodePayload chunking, 20-word cap
 
 ## Next
-- Staff.ImplementationExecution for P1
+- PM.AdvancePhase → advance to P2 (Visual polish & responsive design)
