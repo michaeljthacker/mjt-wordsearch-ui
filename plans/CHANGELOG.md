@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### B1-M3-P2 — Visual polish & responsive design
+- Added favicon links (ico, apple-touch-icon, webmanifest) and Open Graph meta tags to `index.html`
+- Added responsive breakpoint at 480px: cells shrink, grid scrolls horizontally
+- Added hover/focus refinements on puzzle grid cells for better interactivity
+- Added "New Puzzle" button to reset form and clear puzzle output
+- Added congratulatory banner when all words are found (hidden in print view)
+
 ### B1-M3-P1 — Input validation & edge-case hardening
 - Deduplicated words via `Set` before generation; profanity filter relaxed to allow user-entered words (filter only blocks filler-letter profanity using position-aware cell tracking)
 - Chunked `encodePayload` into 8 KB batches to avoid JS argument-limit risk

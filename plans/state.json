@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Staff.DraftQuestions",
-    "result": "skipped",
-    "summary": "Self-skipped — P2 acceptance criteria are specific, favicon assets exist, no ambiguous decisions."
+    "action_id": "PM.StatusUpdate",
+    "result": "ok",
+    "summary": "P2 status recorded; BACKLOG unchanged, CHANGELOG updated. Routing to PM.AdvancePhase."
   },
 
-  "next_action_id": "Staff.ImplementationExecution",
+  "next_action_id": "PM.AdvancePhase",
 
   "blockers": [],
 
