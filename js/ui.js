@@ -52,6 +52,8 @@ export function renderPuzzle(grid, placements, title) {
   }
 
   // Grid
+  const gridWrapper = document.createElement("div");
+  gridWrapper.className = "grid-scroll-wrapper";
   const table = document.createElement("table");
   table.className = "puzzle-grid";
   table.setAttribute("aria-label", "Word search puzzle grid");
@@ -69,7 +71,8 @@ export function renderPuzzle(grid, placements, title) {
     tbody.appendChild(tr);
   }
   table.appendChild(tbody);
-  output.appendChild(table);
+  gridWrapper.appendChild(table);
+  output.appendChild(gridWrapper);
 
   // Solve progress indicator
   const progress = document.createElement("div");

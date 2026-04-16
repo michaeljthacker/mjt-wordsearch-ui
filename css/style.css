@@ -281,8 +281,7 @@ h1 {
     padding: 1rem;
   }
 
-  .puzzle-grid {
-    display: block;
+  .grid-scroll-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
