@@ -3,14 +3,14 @@
 ## Now
 - Build: B1
 - Milestone: M3
-- Phase: P1 — complete
+- Phase: P2 — Visual polish & responsive design
 
 ## Blockers
 - None
 
 ## Recent
-- PM.StatusUpdate — recorded P1 completion; updated BACKLOG and CHANGELOG
-- Staff.ImplementationExecution — P1 complete: dedup, profanity filter relaxation, encodePayload chunking, 20-word cap
+- Staff.DraftQuestions — skipped (path is clear)
+- PM.AdvancePhase — advanced from P1 to P2
 
 ## Next
-- PM.AdvancePhase → advance to P2 (Visual polish & responsive design)
+- Staff.ImplementationExecution for P2
