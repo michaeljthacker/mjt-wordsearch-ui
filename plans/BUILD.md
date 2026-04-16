@@ -13,7 +13,8 @@ Build a fully functional, backend-free word search generator web app (wordsearch
 - Clean print layout (`@media print`)
 - Share link encoding/decoding (`/v1/<code>` routes)
 - Shared-link route: decode → regenerate → render puzzle
-- Solution toggle (reveal word placements)
+- Interactive solve UI: click/drag to highlight words in the grid, confirm correct finds, cross off found words in the word bank, track solve progress
+- Solution toggle (reveal all remaining word placements)
 - Client-side routing (hash-based)
 - Single-page static deployment (HTML/CSS/JS, no frameworks)
 
@@ -30,13 +31,15 @@ Build a fully functional, backend-free word search generator web app (wordsearch
 - The same word list + seed produces the identical grid every time
 - A user can print the puzzle with a clean layout
 - A user can copy a share link; opening that link in another browser reproduces the exact puzzle
-- The solution toggle correctly highlights placed words
+- A user can click/drag across grid letters to select a word; correct selections are confirmed and the word is crossed off the word bank
+- Solve progress is tracked — the user can see which words remain
+- The solution toggle correctly highlights all remaining placed words
 - No profanity appears in filler letters
 - The app runs entirely client-side with no backend dependency
 
 ## Milestones
 - **M1** — Core generator & display: Port the Python generator to JS, build the grid renderer, and implement the create → generate → display flow
-- **M2** — Print & share: Add print stylesheet, URL encoding/decoding, shared-link routing, and solution toggle
+- **M2** — Print, share & solve: Add print stylesheet, URL encoding/decoding, shared-link routing, interactive solve UI (click/drag highlighting, found-word tracking), and solution toggle
 - **M3** — Polish & deploy: Final styling, error handling, edge-case hardening, and deploy to wordsearch.mjt.pub
 
 ## Risks / assumptions

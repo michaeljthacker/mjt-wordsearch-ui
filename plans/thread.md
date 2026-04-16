@@ -39,3 +39,54 @@
 - Verify the Python reference grid size matches the 15×15 assumption early in M1.
 
 **Decision:** Proceed to Principal.MilestonePlan for M1.
+
+---
+### [Human — Build Feedback] — 2025-04-15
+
+**Scope gap identified:** BUILD.md only includes a passive "solution toggle" (reveal answer overlay). It does not include **interactive solving** — the ability for a user to click/drag to highlight words in the grid, confirm correct finds, and track which words have been found.
+
+Human considers interactive solving a required V1 feature. The current "solve" framing (visit a shared link, flip a toggle) is incomplete.
+
+**Requested change:** Product.ProductVision should update BUILD.md to add interactive solve UI to the in-scope features, add a corresponding success criterion, and assign it to the appropriate milestone. Then route back to Principal.BuildReview for re-review.
+
+---
+### [Product.ProductVision — revision] — 2025-04-15
+
+**Trigger:** Human.BuildFeedback requested interactive solve UI be added to V1 scope.
+
+**Changes made:**
+
+1. **BUILD.md — Scope (in scope):** Added "Interactive solve UI: click/drag to highlight words in the grid, confirm correct finds, cross off found words in the word bank, track solve progress." Renamed existing solution toggle to clarify it reveals *remaining* placements.
+
+2. **BUILD.md — Success criteria:** Added two criteria:
+   - A user can click/drag across grid letters to select a word; correct selections are confirmed and the word is crossed off the word bank
+   - Solve progress is tracked — the user can see which words remain
+
+3. **BUILD.md — Milestones:** M2 renamed from "Print & share" → "Print, share & solve" and now includes interactive solve UI.
+
+4. **README.md — Key features:** Updated Solve bullet to describe click/drag interaction and progress tracking.
+
+**Routing:** Back to Principal.BuildReview for re-review of the expanded scope.
+
+---
+### [Principal.BuildReview — re-review] — 2025-04-15
+
+**Outcome: APPROVED** — Revised BUILD.md addresses all human feedback.
+
+**Changes reviewed:**
+- Interactive solve UI added to in-scope items — clear description (click/drag, confirm, cross off, track progress)
+- Two new success criteria are specific and testable
+- M2 expanded to "Print, share & solve" — appropriate grouping since solve UI builds on the grid renderer from M1
+- Solution toggle clarified as revealing *remaining* placements — good UX distinction
+
+**Assessment:**
+- Scope is still well-bounded — interactive solve is additive, not a restructuring
+- M2 is now heavier (print + share + solve) but manageable — these are independent features sharing the same grid UI
+- No new technical risks — click/drag selection is standard DOM event handling
+
+**Previous suggestions still open (non-blocking):**
+1. Profanity filter strategy — decide during M1 planning
+2. Hash-based routing vs `/v1/<code>` paths — decide during M2 planning
+3. Soft word-count cap — document when convenient
+
+**Decision:** Approved. Proceed to Principal.MilestonePlan for M1.

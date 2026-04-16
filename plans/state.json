@@ -12,7 +12,7 @@
   "last_action": {
     "action_id": "Principal.BuildReview",
     "result": "ok",
-    "summary": "BUILD.md approved — scope, criteria, and milestones are solid. No required changes. Suggested clarifying profanity filter strategy and routing convention during milestone planning."
+    "summary": "Re-reviewed revised BUILD.md — approved. Interactive solve UI properly scoped in M2. No required changes. Previous non-blocking suggestions remain open."
   },
 
   "next_action_id": "Principal.MilestonePlan",

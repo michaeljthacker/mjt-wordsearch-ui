@@ -9,8 +9,9 @@
 - None
 
 ## Recent
-- Principal.BuildReview completed — BUILD.md **approved**, no required changes
-- Product.ProductVision completed — README.md and BUILD.md drafted
+- Principal.BuildReview (re-review) — BUILD.md **approved** with interactive solve UI in scope
+- Product.ProductVision (revision) — added interactive solve UI to BUILD.md and README.md
+- Human feedback triggered scope revision for interactive solving
 
 ## Next
 - Principal.MilestonePlan to create the M1 implementation plan

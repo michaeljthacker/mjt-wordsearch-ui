@@ -12,7 +12,7 @@ Users enter a list of words and an optional title, then generate a 15×15 word s
 - **Display** — Rendered 15×15 grid with word bank
 - **Print** — Clean `@media print` layout, hides UI chrome
 - **Share** — Encode puzzle as a URL (`/v1/<code>`) that regenerates client-side
-- **Solve** — Visit a shared link to see the puzzle; toggle to reveal the solution
+- **Solve** — Click/drag to highlight words in the grid; correct finds are confirmed and tracked. Toggle to reveal remaining answers
 
 ## Tech stack
 
