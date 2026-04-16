@@ -3,14 +3,14 @@
 ## Now
 - Build: B1
 - Milestone: M2
-- Phase: P4 — Solution toggle (code review complete)
+- Phase: P4 — milestone complete, closing out
 
 ## Blockers
 - None
 
 ## Recent
-- Principal.CodeReview — M2 full review APPROVED, no required changes, 3 suggested improvements
-- Staff.ImplementationExecution — P4 solution toggle implemented and committed
+- PM.AdvancePhase — P4 is last phase in M2; routing to PM.MilestoneCloseout
+- Human.PhaseApproval — M2 approved; noted share URL length concern (added to BACKLOG P1)
 
 ## Next
-- Staff.ReviewReconciliation — reconcile suggested improvements, then advance to milestone closeout
+- PM.MilestoneCloseout (finalize M2)

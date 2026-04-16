@@ -11,6 +11,9 @@
 - Plain HTML/CSS/JS with ES modules — no build tools, no frameworks, no bundlers
 - Generator API contract: `generate(wordList, seed)` returns `{ grid, placements }`
 
+### Security
+- Render user-supplied data via `textContent` only — never use `innerHTML` or direct DOM insertion of untrusted strings
+
 ### Branching convention
 - (none yet)
 

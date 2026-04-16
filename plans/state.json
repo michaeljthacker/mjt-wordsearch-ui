@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Principal.CodeReview",
+    "action_id": "PM.AdvancePhase",
     "result": "ok",
-    "summary": "M2 code review APPROVED — no required changes, 3 non-blocking suggestions logged."
+    "summary": "P4 is last phase in M2. Routing to PM.MilestoneCloseout."
   },
 
-  "next_action_id": "Staff.ReviewReconciliation",
+  "next_action_id": "PM.MilestoneCloseout",
 
   "blockers": [],
 

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### B1-M2-P4 — Solution toggle (2026-04-16)
+- Added "Show Solution" / "Hide Solution" toggle button; highlights unfound placements in yellow, auto-refreshes as words are found
+- Button disables with "All words found!" message on completion
+- Post-review: fixed rejection flash overlap in solve.js, added `.puzzle-cell.found` print reset in style.css
+
 ### B1-M2-P3 — Interactive solve UI (2026-04-16)
 - Added click-to-select solve mode: click start cell then end cell to highlight a straight line; valid matches turn green and cross off the word in the bank
 - New `js/solve.js` module with line validation, match checking, and progress tracking ("X / Y found")
