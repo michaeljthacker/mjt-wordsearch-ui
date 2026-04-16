@@ -4,18 +4,18 @@
 
   "build_id": "B1",
   "milestone_id": "M3",
-  "phase_id": null,
+  "phase_id": "P1",
   "step_id": null,
 
-  "pause_type": "decision",
+  "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Principal.MilestonePlan",
-    "result": "ok",
-    "summary": "Drafted MILESTONE.md for B1-M3 with 3 phases: P1 input validation & edge-case hardening, P2 visual polish & responsive design, P3 deploy to production."
+    "action_id": "Staff.DraftQuestions",
+    "result": "skipped",
+    "summary": "Path is clear for P1; no blocking questions. All acceptance criteria map to straightforward implementations."
   },
 
-  "next_action_id": "Human.ApproveMilestone",
+  "next_action_id": "Staff.ImplementationExecution",
 
   "blockers": [],
 
