@@ -9,9 +9,9 @@
 - None
 
 ## Recent
-- Staff.DraftQuestions — skipped (path is clear for P1 scaffolding; no ambiguities in acceptance criteria)
-- Human.ApproveMilestone — M1 **approved**, no comments. Advancing to P1.
-- Principal.MilestonePlan completed — MILESTONE.md drafted for B1-M1 (3 phases: scaffolding & input UI, generator port, grid display & integration)
+- Staff.ImplementationExecution — P1 complete: index.html, css/style.css, js/app.js, js/ui.js, js/generator.js (stub). Committed.
+- Staff.DraftQuestions — skipped (path is clear for P1 scaffolding)
+- Human.ApproveMilestone — M1 **approved**, no comments
 
 ## Next
-- Staff.ImplementationExecution for B1-M1-P1
+- Principal.CodeReview for B1-M1-P1
