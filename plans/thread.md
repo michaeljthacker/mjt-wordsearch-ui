@@ -34,3 +34,31 @@
 
 **Risks / trade-offs:**
 - Very large grids (if grid size is ever increased beyond 15×15) may need tighter cell sizing — not a concern at current 15×15.
+
+---
+### Staff.ImplementationExecution — 2026-04-16
+
+**Review Request — P2 (Share URL encoding & hash routing)**
+
+**Implemented:** Hash-based share links using `#/v1/<base64>` encoding. On generate, a "Copy Share Link" button appears. On page load with a hash route, the payload is decoded and the puzzle is regenerated deterministically.
+
+**Key files changed:**
+- `js/app.js` — added `encodePayload`, `decodePayload`, `buildShareUrl`, `handleHash`; refactored generate flow into `generateAndRender`
+- `js/ui.js` — added `renderShareButton` export (clipboard copy with feedback)
+- `css/style.css` — added `.btn-share` styles; added `.btn-share` to print-hide list
+
+**Encoding scheme:**
+- Payload: `JSON.stringify({ t: title, w: words })` → UTF-8 bytes → URL-safe Base64 (`+/` → `-_`, strip `=`)
+- URL format: `<origin><pathname>#/v1/<encoded>`
+- Decoding reverses the process; form is pre-filled from the share link
+
+**Acceptance criteria checklist:**
+- [x] After generating a puzzle, a "Copy Share Link" button is visible in the puzzle output section
+- [x] Clicking the button copies a URL of the form `<origin>/#/v1/<base64>` to the clipboard
+- [x] Opening that URL in a new browser tab decodes the payload, regenerates the identical puzzle, and renders it automatically
+- [x] If the hash payload is malformed or missing, a user-friendly error is displayed instead of a blank page
+- [x] The input form is still accessible when arriving via a share link (user can create a new puzzle)
+
+**Risks / trade-offs:**
+- Very long word lists will produce long URLs; no truncation or length cap enforced (BACKLOG P2 deferred to M3)
+- `navigator.clipboard.writeText` requires a secure context (HTTPS or localhost); falls back to "Copy failed" text on error

@@ -119,5 +119,16 @@ export function renderShareButton(url) {
       }, 2000);
     }
   });
-  output.appendChild(btn);
+
+  const printBtn = document.createElement("button");
+  printBtn.className = "btn-share";
+  printBtn.type = "button";
+  printBtn.textContent = "\u{1F5A8} Print";
+  printBtn.addEventListener("click", () => window.print());
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "puzzle-actions";
+  wrapper.appendChild(btn);
+  wrapper.appendChild(printBtn);
+  output.appendChild(wrapper);
 }

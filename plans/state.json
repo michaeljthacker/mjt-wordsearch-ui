@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Staff.DraftQuestions",
-    "result": "skipped",
-    "summary": "Path is clear for P2 (Share URL encoding & hash routing). No questions. Routing to Staff.ImplementationExecution."
+    "action_id": "Staff.ImplementationExecution",
+    "result": "ok",
+    "summary": "P2 share URL encoding & hash routing implemented and committed. Routing to PM.StatusUpdate (code_review=every_milestone, not last phase)."
   },
 
-  "next_action_id": "Staff.ImplementationExecution",
+  "next_action_id": "PM.StatusUpdate",
 
   "blockers": [],
 
