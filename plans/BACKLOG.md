@@ -1,11 +1,12 @@
 # BACKLOG
-<!-- See plans/FORMATS.md for expected structure. -->
 
 ## P0 (do next)
-- <placeholder>
+- (none)
 
 ## P1
-- <placeholder>
+- Decide profanity filter strategy (blocklist vs. library) before P2 generator implementation
 
 ## P2
-- <placeholder>
+- Reconcile hash-based routing vs. `/v1/<code>` paths (needed before M2 share feature)
+- Document a soft word-count cap tied to URL-length constraints
+- Verify Python reference grid size matches the 15×15 assumption (early P2)

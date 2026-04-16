@@ -3,15 +3,13 @@
 ## Now
 - Build: B1
 - Milestone: M1
-- Phase: P1
+- Phase: P2
 
 ## Blockers
-- None
+- Q-001: Test infrastructure decision needed before P2 implementation (blocking)
 
 ## Recent
-- Staff.ImplementationExecution — P1 complete: index.html, css/style.css, js/app.js, js/ui.js, js/generator.js (stub). Committed.
-- Staff.DraftQuestions — skipped (path is clear for P1 scaffolding)
-- Human.ApproveMilestone — M1 **approved**, no comments
+- Staff.DraftQuestions — drafted 2 questions (Q-001 test infrastructure [blocking], Q-002 profanity list [non-blocking])
 
 ## Next
-- Principal.CodeReview for B1-M1-P1
+- Principal.AnswerQuestions to resolve Q-001/Q-002, then Staff.ImplementationExecution

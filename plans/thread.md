@@ -115,3 +115,26 @@ Created the project file structure and word input form for the word search gener
 **Notes:**
 - The generator stub throws on invocation — clicking Generate with words shows "Generator not yet implemented (coming in P2)" as an error message. This is expected; P2 fills in the real logic.
 - No test infrastructure yet; P1 acceptance doesn't require automated tests. P2 adds tests for the generator.
+
+---
+### [Staff.DraftQuestions] — 2026-04-15
+
+**Context:** Preparing to implement P2 — Generator engine (Python port). The Python reference (`archive/OLD_CODE_word_search.py`) is clear and self-contained (~210 lines). The algorithm, API contract, and deterministic behavior are well-specified in MILESTONE.md. Two areas need decisions before implementation.
+
+**Q-001: Test infrastructure and runner**
+Blocking: Yes
+P2 acceptance requires ≥5 automated tests. The project currently has no test infrastructure — no `package.json`, no test framework, no testing standards in STANDARDS.md. The generator module uses ES module `export` syntax, which affects how tests can import it.
+
+Proposed approach: Use Node.js built-in test runner (`node --test`) with `node:assert`. Create a `package.json` with `"type": "module"` to enable ES module imports in test files. Test files live in a `tests/` directory. This adds no external dependencies and aligns with the "no build tools or frameworks" constraint (which applies to the app, not test tooling).
+
+Alternative: `.mjs` test file extensions (no package.json needed) — but this is less conventional and package.json will likely be needed eventually anyway.
+
+Please confirm or specify a preferred approach.
+
+**Q-002: Profanity filter — port Python list as-is?**
+Blocking: No
+The Python reference has a hardcoded `_BANNED_WORDS` list (~48 words). The MILESTONE says to match the Python reference. The Principal flagged "profanity filter strategy" as needing a decision during M1 planning (see BuildReview thread entry).
+
+Plan: Port the exact Python banned-words array to JavaScript. The filter checks all grid lines (rows, columns, diagonals — forward and backward) after filler placement, identical to the Python behavior. No external library, no expanded list.
+
+If there's a preference for a different/expanded list or a library-based approach, flag it now; otherwise the Python list is the default.

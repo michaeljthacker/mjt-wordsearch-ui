@@ -4,18 +4,18 @@
 
   "build_id": "B1",
   "milestone_id": "M1",
-  "phase_id": "P1",
+  "phase_id": "P2",
   "step_id": null,
 
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Staff.ImplementationExecution",
+    "action_id": "Staff.DraftQuestions",
     "result": "ok",
-    "summary": "P1 implemented: index.html, CSS, JS module structure (app, ui, generator stub). All acceptance criteria met. Committed."
+    "summary": "Drafted 2 questions for P2: Q-001 test infrastructure (blocking), Q-002 profanity list (non-blocking)."
   },
 
-  "next_action_id": "Principal.CodeReview",
+  "next_action_id": "Principal.AnswerQuestions",
 
   "blockers": [],
 
