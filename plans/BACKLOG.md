@@ -11,3 +11,4 @@
 
 ## P2
 - Document a soft word-count cap tied to URL-length constraints
+- Chunk `String.fromCodePoint(...bytes)` in `encodePayload` to avoid argument-limit risk with very large payloads (aligns with URL-length deferral)

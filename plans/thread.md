@@ -95,3 +95,59 @@
 - P1: Win celebration animation when all words found
 - P1: Per-word random colors for found highlights (deterministic order, no hash storage needed)
 - P1: Profanity filter substring matching — BANNED_WORDS should block words containing banned substrings (e.g., BUTTER blocked by BUTT, RAPES blocked by RAPE)
+
+---
+### Staff.ImplementationExecution — 2026-04-16
+
+**Review Request — P4 (Solution toggle)**
+
+**Implemented:** A "Show Solution" / "Hide Solution" toggle button in the puzzle actions bar. When activated, all cells belonging to unfound word placements are highlighted in yellow. When deactivated, solution highlights are removed while found-word highlights (green) remain intact.
+
+**Key files changed:**
+- `js/solve.js` — added `getSolutionCells()` helper, solution toggle button creation, show/hide logic, and auto-refresh of solution highlights when words are found while solution is showing. Updated `updateProgress()` to disable button and show "All words found!" on completion.
+- `css/style.css` — added `.puzzle-cell.solution` style (yellow `#fef08a`); added print override to hide solution highlights
+
+**Behavior details:**
+- Button appended to `.puzzle-actions` div alongside share/print buttons
+- Toggle on: highlights unfound placements in yellow (`.solution` class)
+- Toggle off: removes `.solution` class; `.found` (green) highlights remain
+- Finding a word while solution is showing refreshes the highlights (removes newly-found word's cells from solution highlight)
+- When all words found: button text changes to "All words found!", button is disabled, solution highlights cleared
+
+**Acceptance criteria checklist:**
+- [x] A "Show Solution" button appears below the puzzle output after generation
+- [x] Toggling it on highlights all unfound word placements with a distinct style (yellow, different from green "found" highlight)
+- [x] Toggling it off removes solution highlights; found-word highlights remain intact
+- [x] If all words have been found, the button text updates to "All words found!" and is disabled
+- [x] Solution toggle works correctly whether invoked before or after partial solving
+
+---
+### Principal.CodeReview — 2026-04-16
+
+**Scope:** Full M2 code review (P1–P4) at "balanced" strictness.
+
+**Reviewed against:** MILESTONE.md acceptance criteria, DECISIONS.md, STANDARDS.md.
+
+**Files reviewed:** `index.html`, `css/style.css`, `js/app.js`, `js/ui.js`, `js/solve.js`, `js/generator.js`
+
+#### Verdict: APPROVED
+
+All four phases meet their acceptance criteria. The code is correct, well-structured, and adheres to project standards (plain HTML/CSS/JS with ES modules, no build tools, generator API contract intact, manual validation only).
+
+#### REQUIRED changes
+None.
+
+#### SUGGESTED improvements (non-blocking)
+
+1. **`encodePayload` spread risk (app.js L38):** `String.fromCodePoint(...bytes)` spreads the full byte array into function arguments. JS engines typically cap arguments around 65k. For typical word lists this is fine, and BACKLOG P2 already defers URL-length concerns to M3, so this aligns with existing deferral. Consider chunking if M3 raises the length cap.
+
+2. **Rejection flash timing overlap (solve.js):** When a selection is rejected, `startCell` is nulled immediately but the `.selected` CSS class lingers for 300ms. If a user clicks a new start cell during that window, old blue highlights overlap briefly with the new selection. Low impact — a `clearSelection()` call at the top of the first-click branch would prevent it.
+
+3. **Found-cell highlights print green (style.css):** The print stylesheet resets `.puzzle-cell { background: #fff }` and `.puzzle-cell.solution { background: #fff }`, but `.puzzle-cell.found` (specificity 0-2-0) overrides the base `.puzzle-cell` reset (0-1-0). Found cells will print with green backgrounds. If a clean printout is desired, add `.puzzle-cell.found { background: #fff; }` to the `@media print` block. Alternatively, keeping green in print could be a feature (shows solve progress). Design call, not a bug.
+
+#### Standards / Decisions compliance
+- Plain HTML/CSS/JS, ES modules, no build tools ✅
+- `generate(wordList, seed)` returns `{ grid, placements }` ✅
+- Profanity filter present with ~48 banned words ✅
+- No automated tests (per DECISIONS) ✅
+- No security concerns: user data rendered via `textContent`, share-link decoding validated and wrapped in try/catch, no XSS vectors ✅

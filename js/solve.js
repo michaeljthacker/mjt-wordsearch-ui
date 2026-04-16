@@ -119,6 +119,7 @@ export function initSolve(table, placements) {
     const col = parseInt(cell.dataset.col, 10);
 
     if (!startCell) {
+      clearSelection();
       startCell = cell;
       cell.classList.add("selected");
     } else {

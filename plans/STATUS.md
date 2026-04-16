@@ -3,15 +3,14 @@
 ## Now
 - Build: B1
 - Milestone: M2
-- Phase: P4 — Solution toggle
+- Phase: P4 — Solution toggle (code review complete)
 
 ## Blockers
 - None
 
 ## Recent
-- Staff.DraftQuestions — skipped (path is clear)
-- PM.AdvancePhase — advanced from P3 to P4 (Solution toggle)
-- PM.StatusUpdate — P3 status captured; CHANGELOG updated; 3 new BACKLOG items from human feedback
+- Principal.CodeReview — M2 full review APPROVED, no required changes, 3 suggested improvements
+- Staff.ImplementationExecution — P4 solution toggle implemented and committed
 
 ## Next
-- Staff.ImplementationExecution for B1-M2-P4
+- Staff.ReviewReconciliation — reconcile suggested improvements, then advance to milestone closeout
