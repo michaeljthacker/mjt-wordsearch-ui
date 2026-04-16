@@ -3,16 +3,15 @@
 ## Now
 - Build: B1
 - Milestone: M2
-- Phase: P2 — Share URL encoding & hash routing
+- Phase: P3 — Interactive solve UI
 
 ## Blockers
 - None
 
 ## Recent
-- Staff.ImplementationExecution — P2 share URL encoding & hash routing implemented and committed
-- Staff.DraftQuestions — skipped (path is clear for P2)
-- PM.AdvancePhase — advanced from P1 to P2
-- PM.StatusUpdate — P1 status captured; BACKLOG P0 resolved; CHANGELOG updated
+- Staff.DraftQuestions — skipped (path is clear for P3; placements data structure and acceptance criteria are unambiguous)
+- PM.AdvancePhase — advanced from P2 to P3 (Interactive solve UI)
+- PM.StatusUpdate — P2 status captured; CHANGELOG updated; Print button noted as bonus
 
 ## Next
-- PM.StatusUpdate for B1-M2-P2
+- Staff.ImplementationExecution for B1-M2-P3

@@ -204,6 +204,35 @@ h1 {
   margin-top: 1.5rem;
 }
 
+/* --- Solve mode --- */
+
+.puzzle-cell {
+  cursor: pointer;
+}
+
+.puzzle-cell.selected {
+  background: #bfdbfe;
+}
+
+.puzzle-cell.found {
+  background: #bbf7d0;
+}
+
+.word-bank li.word-found {
+  text-decoration: line-through;
+  color: var(--color-muted);
+  background: transparent;
+  border-color: transparent;
+}
+
+.solve-progress {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
 /* --- Print --- */
 
 @media print {
@@ -215,6 +244,7 @@ h1 {
   .puzzle-form,
   .error-message,
   .puzzle-actions,
+  .solve-progress,
   h1 {
     display: none !important;
   }

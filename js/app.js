@@ -13,6 +13,7 @@ import {
   clearPuzzle,
   renderShareButton,
 } from "./ui.js";
+import { initSolve } from "./solve.js";
 
 /**
  * Derive a deterministic numeric seed from a word list.
@@ -67,6 +68,11 @@ function generateAndRender(words, title) {
     const result = generate(words, seed);
     renderPuzzle(result.grid, result.placements, title);
     renderShareButton(buildShareUrl(title, words));
+
+    const table = document.querySelector(".puzzle-grid");
+    if (table) {
+      initSolve(table, result.placements);
+    }
   } catch (err) {
     showError(err.message);
   }

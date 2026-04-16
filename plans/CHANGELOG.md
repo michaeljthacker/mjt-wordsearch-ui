@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### B1-M2-P2 — Share URL encoding & hash routing (2026-04-16)
+- Implemented `#/v1/<base64>` hash routing: encodes word list + title as URL-safe Base64, decodes on page load to regenerate identical puzzle
+- Added "Copy Share Link" button with clipboard API feedback; added "Print" button (bonus, not in plan) for discoverability
+- Pre-fills form from share links; shows friendly errors for malformed/empty payloads
+
 ### B1-M2-P1 — Print stylesheet (2026-04-16)
 - Added `@media print` rules to `css/style.css`: hides form, errors, and heading; shows only puzzle title, grid, and word bank
 - Compact cell sizing (1.6rem) with black borders and `page-break-inside: avoid` for single-page output

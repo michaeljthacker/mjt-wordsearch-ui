@@ -56,18 +56,26 @@ export function renderPuzzle(grid, placements, title) {
   table.className = "puzzle-grid";
   table.setAttribute("aria-label", "Word search puzzle grid");
   const tbody = document.createElement("tbody");
-  for (const row of grid) {
+  for (let r = 0; r < grid.length; r++) {
     const tr = document.createElement("tr");
-    for (const letter of row) {
+    for (let c = 0; c < grid[r].length; c++) {
       const td = document.createElement("td");
       td.className = "puzzle-cell";
-      td.textContent = letter;
+      td.textContent = grid[r][c];
+      td.dataset.row = r;
+      td.dataset.col = c;
       tr.appendChild(td);
     }
     tbody.appendChild(tr);
   }
   table.appendChild(tbody);
   output.appendChild(table);
+
+  // Solve progress indicator
+  const progress = document.createElement("div");
+  progress.id = "solve-progress";
+  progress.className = "solve-progress";
+  output.appendChild(progress);
 
   // Word bank
   const section = document.createElement("div");
