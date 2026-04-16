@@ -33,7 +33,11 @@ function hashWords(words) {
 function encodePayload(title, words) {
   const json = JSON.stringify({ t: title || "", w: words });
   const bytes = new TextEncoder().encode(json);
-  const binary = String.fromCodePoint(...bytes);
+  const chunks = [];
+  for (let i = 0; i < bytes.length; i += 8192) {
+    chunks.push(String.fromCodePoint(...bytes.subarray(i, i + 8192)));
+  }
+  const binary = chunks.join("");
   return btoa(binary)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
@@ -54,12 +58,23 @@ function buildShareUrl(title, words) {
 
 /* --- Core generate + render --- */
 
+const MAX_WORDS = 20;
+
 function generateAndRender(words, title) {
   clearError();
   clearPuzzle();
 
+  words = [...new Set(words)];
+
   if (words.length === 0) {
     showError("Please enter at least one word.");
+    return;
+  }
+
+  if (words.length > MAX_WORDS) {
+    showError(
+      `Too many words \u2014 please enter ${MAX_WORDS} or fewer (you entered ${words.length}).`
+    );
     return;
   }
 

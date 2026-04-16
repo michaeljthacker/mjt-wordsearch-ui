@@ -60,51 +60,65 @@ function extractLines(grid) {
   const size = grid.length;
   const lines = [];
 
-  for (const row of grid) {
-    lines.push(row.join(""));
+  for (let r = 0; r < size; r++) {
+    const positions = grid[r].map((_, c) => [r, c]);
+    lines.push({ text: grid[r].join(""), positions });
   }
 
   for (let col = 0; col < size; col++) {
-    let s = "";
+    let text = "";
+    const positions = [];
     for (let row = 0; row < size; row++) {
-      s += grid[row][col];
+      text += grid[row][col];
+      positions.push([row, col]);
     }
-    lines.push(s);
+    lines.push({ text, positions });
   }
 
   for (let start = -(size - 1); start < size; start++) {
-    let diag = "";
+    let text = "";
+    const positions = [];
     for (let i = 0; i < size; i++) {
       const r = i;
       const c = i - start;
       if (r >= 0 && r < size && c >= 0 && c < size) {
-        diag += grid[r][c];
+        text += grid[r][c];
+        positions.push([r, c]);
       }
     }
-    if (diag) lines.push(diag);
+    if (text) lines.push({ text, positions });
   }
 
   for (let start = 0; start < 2 * size - 1; start++) {
-    let diag = "";
+    let text = "";
+    const positions = [];
     for (let i = 0; i < size; i++) {
       const r = i;
       const c = start - i;
       if (r >= 0 && r < size && c >= 0 && c < size) {
-        diag += grid[r][c];
+        text += grid[r][c];
+        positions.push([r, c]);
       }
     }
-    if (diag) lines.push(diag);
+    if (text) lines.push({ text, positions });
   }
 
   return lines;
 }
 
-function containsBannedWord(grid) {
-  for (const line of extractLines(grid)) {
-    const backward = line.split("").reverse().join("");
+function containsBannedWord(grid, isPlaced) {
+  for (const { text, positions } of extractLines(grid)) {
     for (const banned of BANNED_WORDS) {
-      if (line.includes(banned) || backward.includes(banned)) {
-        return true;
+      const variants = [banned, banned.split("").reverse().join("")];
+      for (const variant of variants) {
+        let idx = text.indexOf(variant);
+        while (idx !== -1) {
+          for (let i = 0; i < variant.length; i++) {
+            const [r, c] = positions[idx + i];
+            if (!isPlaced[r][c]) return true;
+          }
+          idx = text.indexOf(variant, idx + 1);
+        }
       }
     }
   }
@@ -180,12 +194,6 @@ export function generate(wordList, seed) {
     }
   }
 
-  for (const word of normalized) {
-    if (BANNED_WORDS.includes(word)) {
-      throw new Error(`Word '${word}' is in the banned-words list.`);
-    }
-  }
-
   const rng = createRng(seed);
 
   const wordsSorted = [...normalized].sort((a, b) => b.length - a.length);
@@ -213,9 +221,19 @@ export function generate(wordList, seed) {
 
     if (!allPlaced) continue;
 
+    const isPlaced = Array.from({ length: GRID_SIZE }, () =>
+      Array.from({ length: GRID_SIZE }, () => false)
+    );
+    for (const p of placements) {
+      const [dr, dc] = p.direction;
+      for (let i = 0; i < p.word.length; i++) {
+        isPlaced[p.row + dr * i][p.col + dc * i] = true;
+      }
+    }
+
     fillRandomLetters(grid, rng);
 
-    if (containsBannedWord(grid)) continue;
+    if (containsBannedWord(grid, isPlaced)) continue;
 
     const order = new Map(normalized.map((w, i) => [w, i]));
     placements.sort((a, b) => order.get(a.word) - order.get(b.word));
