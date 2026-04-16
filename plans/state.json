@@ -4,7 +4,7 @@
 
   "build_id": "B1",
   "milestone_id": "M2",
-  "phase_id": "P3",
+  "phase_id": "P4",
   "step_id": null,
 
   "pause_type": "continue",
@@ -12,7 +12,7 @@
   "last_action": {
     "action_id": "Staff.DraftQuestions",
     "result": "skipped",
-    "summary": "Skipped — path is clear for P3 (Interactive solve UI). No blocking questions."
+    "summary": "Self-skipped — P4 acceptance criteria are clear, placements data available, no architectural ambiguities."
   },
 
   "next_action_id": "Staff.ImplementationExecution",

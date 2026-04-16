@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### B1-M2-P3 — Interactive solve UI (2026-04-16)
+- Added click-to-select solve mode: click start cell then end cell to highlight a straight line; valid matches turn green and cross off the word in the bank
+- New `js/solve.js` module with line validation, match checking, and progress tracking ("X / Y found")
+- Added `.selected`, `.found`, `.word-found`, `.solve-progress` CSS styles; hidden in print
+
 ### B1-M2-P2 — Share URL encoding & hash routing (2026-04-16)
 - Implemented `#/v1/<base64>` hash routing: encodes word list + title as URL-safe Base64, decodes on page load to regenerate identical puzzle
 - Added "Copy Share Link" button with clipboard API feedback; added "Print" button (bonus, not in plan) for discoverability

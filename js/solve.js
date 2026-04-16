@@ -13,6 +13,8 @@
 export function initSolve(table, placements) {
   const foundWords = new Set();
   let startCell = null;
+  let showingSolution = false;
+  let solutionBtn = null;
 
   const tbody = table.querySelector("tbody");
 
@@ -90,6 +92,23 @@ export function initSolve(table, placements) {
     if (el) {
       el.textContent = `${foundWords.size} / ${placements.length} found`;
     }
+    if (!solutionBtn) return;
+    if (foundWords.size === placements.length) {
+      if (showingSolution) {
+        table.querySelectorAll(".puzzle-cell.solution").forEach((c) =>
+          c.classList.remove("solution")
+        );
+        showingSolution = false;
+      }
+      solutionBtn.textContent = "All words found!";
+      solutionBtn.disabled = true;
+    } else if (showingSolution) {
+      // Refresh solution highlights for remaining unfound words
+      table.querySelectorAll(".puzzle-cell.solution").forEach((c) =>
+        c.classList.remove("solution")
+      );
+      getSolutionCells().forEach((c) => c.classList.add("solution"));
+    }
   }
 
   table.addEventListener("click", (e) => {
@@ -135,6 +154,45 @@ export function initSolve(table, placements) {
       }
     }
   });
+
+  // --- Solution toggle ---
+
+  function getSolutionCells() {
+    const cells = [];
+    for (const p of placements) {
+      if (foundWords.has(p.word)) continue;
+      const [dr, dc] = p.direction;
+      for (let i = 0; i < p.word.length; i++) {
+        const cell = getCell(p.row + dr * i, p.col + dc * i);
+        if (cell) cells.push(cell);
+      }
+    }
+    return cells;
+  }
+
+  solutionBtn = document.createElement("button");
+  solutionBtn.className = "btn-share";
+  solutionBtn.type = "button";
+  solutionBtn.textContent = "Show Solution";
+  solutionBtn.addEventListener("click", () => {
+    if (foundWords.size === placements.length) return;
+    if (showingSolution) {
+      table.querySelectorAll(".puzzle-cell.solution").forEach((c) =>
+        c.classList.remove("solution")
+      );
+      showingSolution = false;
+      solutionBtn.textContent = "Show Solution";
+    } else {
+      getSolutionCells().forEach((c) => c.classList.add("solution"));
+      showingSolution = true;
+      solutionBtn.textContent = "Hide Solution";
+    }
+  });
+
+  const actionsDiv = document.querySelector(".puzzle-actions");
+  if (actionsDiv) {
+    actionsDiv.appendChild(solutionBtn);
+  }
 
   updateProgress();
 }

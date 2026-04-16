@@ -214,6 +214,10 @@ h1 {
   background: #bfdbfe;
 }
 
+.puzzle-cell.solution {
+  background: #fef08a;
+}
+
 .puzzle-cell.found {
   background: #bbf7d0;
 }
@@ -276,6 +280,10 @@ h1 {
     font-size: 0.85rem;
     line-height: 1.6rem;
     border: 1px solid #000;
+    background: #fff;
+  }
+
+  .puzzle-cell.solution {
     background: #fff;
   }
 

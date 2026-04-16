@@ -62,3 +62,36 @@
 **Risks / trade-offs:**
 - Very long word lists will produce long URLs; no truncation or length cap enforced (BACKLOG P2 deferred to M3)
 - `navigator.clipboard.writeText` requires a secure context (HTTPS or localhost); falls back to "Copy failed" text on error
+
+---
+### Staff.ImplementationExecution — 2026-04-16
+
+**Review Request — P3 (Interactive solve UI)**
+
+**Implemented:** Click-to-select solve mode. Users click a start cell then an end cell to highlight a straight line. If the letters match a placed word, cells turn green and the word is crossed off in the bank. A progress counter tracks found words.
+
+**Key files changed:**
+- `js/solve.js` — new module: `initSolve(table, placements)` handles click events, line validation, match checking, found-state management, and progress updates
+- `js/ui.js` — added `data-row`/`data-col` attributes to grid cells; added `#solve-progress` div after grid
+- `js/app.js` — imported `initSolve`; called after `renderPuzzle` with the grid table and placements
+- `css/style.css` — added `.selected` (blue), `.found` (green), `.word-found` (strikethrough), `.solve-progress` styles; hid `.solve-progress` in print
+
+**Interaction model:**
+- First click selects start cell (blue highlight)
+- Second click computes straight line to end cell; only H/V/diagonal lines are valid
+- Match → cells turn green, word crossed off, progress updates
+- No match → blue highlight flashes 300ms then clears
+- Clicking same cell twice deselects
+
+**Acceptance criteria checklist:**
+- [x] Clicking a start cell and an end cell selects all cells along the straight line between them
+- [x] Only valid straight lines are selectable (horizontal, vertical, or diagonal — matching the 8 directions)
+- [x] A correct selection highlights the cells with a persistent "found" style and crosses off the word in the word bank
+- [x] An incorrect selection (letters don't match any remaining word) is visually rejected (selection clears, no highlight persists)
+- [x] A progress indicator shows how many words have been found out of the total (e.g., "3 / 8 found")
+- [x] All found-word state is visual only (no persistence across page reload required)
+
+**New BACKLOG items from human feedback:**
+- P1: Win celebration animation when all words found
+- P1: Per-word random colors for found highlights (deterministic order, no hash storage needed)
+- P1: Profanity filter substring matching — BANNED_WORDS should block words containing banned substrings (e.g., BUTTER blocked by BUTT, RAPES blocked by RAPE)
