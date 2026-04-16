@@ -2,15 +2,14 @@
 
 ## Now
 - Build: B1
-- Milestone: M2
-- Phase: P4 — milestone complete, closing out
+- Milestone: M3 (pending plan)
+- Phase: n/a
 
 ## Blockers
 - None
 
 ## Recent
-- PM.AdvancePhase — P4 is last phase in M2; routing to PM.MilestoneCloseout
-- Human.PhaseApproval — M2 approved; noted share URL length concern (added to BACKLOG P1)
+- PM.ThreadMaintenance — pruned M2→M3 transition (2 entries → 1 summary); no new promotions needed
 
 ## Next
-- PM.MilestoneCloseout (finalize M2)
+- Principal.MilestonePlan for M3 (Polish & deploy)

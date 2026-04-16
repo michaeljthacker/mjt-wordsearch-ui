@@ -2,26 +2,29 @@
 
 ## Unreleased
 
-### B1-M2-P4 — Solution toggle (2026-04-16)
+## Released
+
+### B1-M2 — Print, share & solve (2026-04-16)
+Milestone M2 complete — added print stylesheet, shareable URL hash routing, interactive solve UI, and solution toggle.
+
+#### P4 — Solution toggle
 - Added "Show Solution" / "Hide Solution" toggle button; highlights unfound placements in yellow, auto-refreshes as words are found
 - Button disables with "All words found!" message on completion
 - Post-review: fixed rejection flash overlap in solve.js, added `.puzzle-cell.found` print reset in style.css
 
-### B1-M2-P3 — Interactive solve UI (2026-04-16)
+#### P3 — Interactive solve UI
 - Added click-to-select solve mode: click start cell then end cell to highlight a straight line; valid matches turn green and cross off the word in the bank
 - New `js/solve.js` module with line validation, match checking, and progress tracking ("X / Y found")
 - Added `.selected`, `.found`, `.word-found`, `.solve-progress` CSS styles; hidden in print
 
-### B1-M2-P2 — Share URL encoding & hash routing (2026-04-16)
+#### P2 — Share URL encoding & hash routing
 - Implemented `#/v1/<base64>` hash routing: encodes word list + title as URL-safe Base64, decodes on page load to regenerate identical puzzle
-- Added "Copy Share Link" button with clipboard API feedback; added "Print" button (bonus, not in plan) for discoverability
+- Added "Copy Share Link" button with clipboard API feedback; added "Print" button for discoverability
 - Pre-fills form from share links; shows friendly errors for malformed/empty payloads
 
-### B1-M2-P1 — Print stylesheet (2026-04-16)
+#### P1 — Print stylesheet
 - Added `@media print` rules to `css/style.css`: hides form, errors, and heading; shows only puzzle title, grid, and word bank
 - Compact cell sizing (1.6rem) with black borders and `page-break-inside: avoid` for single-page output
-
-## Released
 
 ### B1-M1 — Core generator & display (2026-04-16)
 Milestone M1 complete — ported Python word search generator to JavaScript, built the grid renderer, and implemented the create → generate → display flow as a static single-page app.
