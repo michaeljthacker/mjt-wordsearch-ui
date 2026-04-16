@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### B1-M3-P3 — Deploy to production
+- Added `CNAME` file (`wordsearch.mjt.pub`) for GitHub Pages custom domain
+- Remaining deploy steps (GitHub Pages config, DNS, live verification) are human actions
+
 ### B1-M3-P2 — Visual polish & responsive design
 - Added favicon links (ico, apple-touch-icon, webmanifest) and Open Graph meta tags to `index.html`
 - Added responsive breakpoint at 480px: cells shrink, grid scrolls horizontally

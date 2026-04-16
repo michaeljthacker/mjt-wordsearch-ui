@@ -10,12 +10,12 @@
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "Principal.CodeReview",
+    "action_id": "Human.PhaseApproval",
     "result": "ok",
-    "summary": "APPROVED full M3 (P1, P2, P3). No required changes. Two non-blocking suggestions noted."
+    "summary": "P3 approved. Site live at wordsearch.mjt.pub — all features verified. BACKLOG updated with future-build items (curated library, accessibility audit)."
   },
 
-  "next_action_id": "Staff.ReviewReconciliation",
+  "next_action_id": "PM.AdvancePhase",
 
   "blockers": [],
 
