@@ -138,3 +138,49 @@ The Python reference has a hardcoded `_BANNED_WORDS` list (~48 words). The MILES
 Plan: Port the exact Python banned-words array to JavaScript. The filter checks all grid lines (rows, columns, diagonals — forward and backward) after filler placement, identical to the Python behavior. No external library, no expanded list.
 
 If there's a preference for a different/expanded list or a library-based approach, flag it now; otherwise the Python list is the default.
+
+---
+### [Principal.AnswerQuestions] — 2026-04-15
+
+**A-001 (Q-001): No automated tests — manual validation only.**
+Human directive: skip test infrastructure entirely. This is a one-day side project; automated tests are overhead that slows momentum. The P2 acceptance criterion requiring ≥5 automated tests is removed. Validation is manual: generate a puzzle, inspect the grid, verify determinism by regenerating with the same input. No `package.json`, no test runner, no `tests/` directory.
+
+**A-002 (Q-002): Port the Python banned-words list as-is. Confirmed.**
+Copy the ~48-word `_BANNED_WORDS` array directly from the Python reference. Same scan logic (rows, cols, diagonals, forward+backward). No external library, no expanded list.
+
+---
+### [Staff.ImplementationExecution] — 2026-04-15
+
+**Review Request — P2 (Generator engine — Python port)**
+
+**What was implemented:**
+Ported the full word search generator from `archive/OLD_CODE_word_search.py` to `js/generator.js`. The stub was replaced with a complete ES module implementing all generator logic.
+
+**Key components:**
+- **Seeded PRNG:** Mulberry32 algorithm — `createRng(seed)` returns `{ randint, choice }` matching the Python `random.Random` API surface used by the reference
+- **Weighted directions:** 15-element `DIRECTIONS` array matching Python's frequency weights (right 3×, down 3×, down-right 2×, etc.)
+- **Word placement:** `placeWord()` — tries up to 200 random positions/directions per word, supports letter overlap, checks bounds
+- **Filler letters:** `fillRandomLetters()` — fills empty cells with random uppercase A–Z
+- **Profanity filter:** `containsBannedWord()` — extracts all rows, columns, and diagonals (forward + backward), checks against the 48-word banned list ported directly from Python
+- **Validation:** Rejects empty lists, words >15 chars, non-alphabetic input, and banned words with clear error messages
+- **Grid attempts:** Up to 100 full-grid retries if placement fails or profanity is detected
+
+**Key file changed:**
+- `js/generator.js` — complete rewrite (stub → ~210 lines of generator logic)
+
+**Acceptance criteria checklist:**
+- [x] `generate(wordList, seed)` returns `{ grid, placements }` matching the Python contract
+- [x] Seeded PRNG produces repeatable sequences (same seed → same output across calls) — verified: `Deterministic: true`
+- [x] Words are placed with weighted direction probabilities matching the Python reference
+- [x] Filler letters are random uppercase A–Z; banned-word scan covers rows, columns, diagonals (forward + backward)
+- [x] Words exceeding 15 characters, empty lists, non-alphabetic input, and banned words are rejected with clear errors
+- [x] Manual verification: generated puzzle with 8 words, inspected 15×15 grid, confirmed all words present, confirmed determinism
+
+**Manual verification results:**
+Input: `['JESUS','CROSS','BIBLE','PRAYER','FAITH','HOPE','LOVE','GRACE']`, seed `42`
+- Grid: 15×15 ✓, all 8 words placed ✓, deterministic regeneration ✓
+- Error cases tested: empty list ✓, word too long ✓, non-alpha ✓, banned word ✓
+
+**Notes:**
+- The PRNG is *not* identical to Python's `random.Random` (Mersenne Twister) — same inputs will produce *different* grids than the Python version. This is expected: the contract is determinism within JS, not cross-language bit-compatibility.
+- No automated tests per decision A-001.

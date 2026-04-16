@@ -2,7 +2,7 @@
 <!-- See plans/FORMATS.md for expected structure. -->
 
 ### Testing
-- <placeholder>
+- Manual validation only — no test framework, no test runner, no `package.json` required
 
 ### Code style / lint
 - <placeholder>

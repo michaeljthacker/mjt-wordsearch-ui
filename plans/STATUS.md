@@ -6,10 +6,11 @@
 - Phase: P2
 
 ## Blockers
-- Q-001: Test infrastructure decision needed before P2 implementation (blocking)
+- None
 
 ## Recent
-- Staff.DraftQuestions — drafted 2 questions (Q-001 test infrastructure [blocking], Q-002 profanity list [non-blocking])
+- Staff.ImplementationExecution — ported Python word search generator to JS (seeded PRNG, weighted placement, overlap, filler, profanity filter). Manual verification passed: 8-word puzzle, determinism confirmed.
+- Principal.AnswerQuestions — resolved Q-001 (no automated tests, manual validation only per human directive) and Q-002 (port Python profanity list as-is)
 
 ## Next
-- Principal.AnswerQuestions to resolve Q-001/Q-002, then Staff.ImplementationExecution
+- PM.StatusUpdate for P2

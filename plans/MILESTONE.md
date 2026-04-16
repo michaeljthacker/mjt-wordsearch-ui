@@ -21,7 +21,7 @@ Port the Python word search generator to JavaScript, build the grid renderer, an
 - [ ] Words are placed with weighted direction probabilities matching the Python reference
 - [ ] Filler letters are random uppercase A–Z; no banned words appear in any row, column, or diagonal (forward or backward)
 - [ ] Words exceeding 15 characters, empty lists, non-alphabetic input, and banned words are rejected with clear errors
-- [ ] At least 5 automated tests cover: deterministic output, word placement, filler profanity filtering, input validation, and edge cases (max-length word, grid full)
+- [ ] Manual verification: generate a puzzle, inspect grid correctness, and confirm determinism (same input → same grid)
 
 ### P3 — Grid display & end-to-end integration
 **What:** Build the grid renderer (15×15 HTML grid of letter cells) and the word bank (list of placed words). Wire the full create → generate → display flow: user enters words, clicks "Generate", the generator runs, and the grid + word bank appear on the page. The title (if provided) displays above the grid.
