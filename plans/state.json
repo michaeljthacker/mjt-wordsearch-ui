@@ -4,18 +4,18 @@
 
   "build_id": "B1",
   "milestone_id": "M3",
-  "phase_id": "P2",
+  "phase_id": "P3",
   "step_id": null,
 
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "PM.StatusUpdate",
-    "result": "ok",
-    "summary": "P2 status recorded; BACKLOG unchanged, CHANGELOG updated. Routing to PM.AdvancePhase."
+    "action_id": "Staff.DraftQuestions",
+    "result": "skipped",
+    "summary": "Self-skipped — P3 acceptance criteria are specific, no ambiguous decisions."
   },
 
-  "next_action_id": "PM.AdvancePhase",
+  "next_action_id": "Staff.ImplementationExecution",
 
   "blockers": [],
 
