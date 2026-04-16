@@ -2,14 +2,14 @@
 
 ## Now
 - Build: B1
-- Milestone: M3 (pending plan)
+- Milestone: M3 (plan drafted, pending approval)
 - Phase: n/a
 
 ## Blockers
 - None
 
 ## Recent
-- PM.ThreadMaintenance — pruned M2→M3 transition (2 entries → 1 summary); no new promotions needed
+- Principal.MilestonePlan completed — MILESTONE.md drafted for M3 (3 phases: input hardening, visual polish, deploy)
 
 ## Next
-- Principal.MilestonePlan for M3 (Polish & deploy)
+- Human.ApproveMilestone to review scope

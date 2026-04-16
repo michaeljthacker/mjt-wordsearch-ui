@@ -7,15 +7,15 @@
   "phase_id": null,
   "step_id": null,
 
-  "pause_type": "continue",
+  "pause_type": "decision",
 
   "last_action": {
-    "action_id": "PM.ThreadMaintenance",
+    "action_id": "Principal.MilestonePlan",
     "result": "ok",
-    "summary": "Pruned M2→M3 transition thread (2 entries → 1 summary). No new promotions. Ready for M3 planning."
+    "summary": "Drafted MILESTONE.md for B1-M3 with 3 phases: P1 input validation & edge-case hardening, P2 visual polish & responsive design, P3 deploy to production."
   },
 
-  "next_action_id": "Principal.MilestonePlan",
+  "next_action_id": "Human.ApproveMilestone",
 
   "blockers": [],
 
@@ -24,8 +24,7 @@
     "notes": [
       "STATE is the routing source of truth.",
       "STATUS must be updated every action.",
-      "Thread is active working memory; prune regularly.",
-      "Human directive: reprioritize BACKLOG and consider an additional milestone for BACKLOG items before final deploy."
+      "Thread is active working memory; prune regularly."
     ]
   }
 }
