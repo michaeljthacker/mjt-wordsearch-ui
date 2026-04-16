@@ -9,9 +9,9 @@
 - None
 
 ## Recent
-- Staff.DraftQuestions — skipped (path is clear): P3 requires CNAME file creation, human GitHub Pages + DNS config, and post-deploy verification — no ambiguous decisions
+- Principal.CodeReview — APPROVED full M3 (P1, P2, P3). No required changes. Two minor suggestions (non-blocking).
+- Staff.ImplementationExecution — created CNAME file for wordsearch.mjt.pub; remaining acceptance criteria require human actions
 - PM.AdvancePhase — advanced from P2 to P3
-- PM.StatusUpdate — P2 status recorded; BACKLOG unchanged, CHANGELOG updated
 
 ## Next
-- Staff.ImplementationExecution for P3 (Deploy to production)
+- Staff.ReviewReconciliation for P3 (reconcile review suggestions, then route to PM.StatusUpdate)
