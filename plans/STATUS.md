@@ -1,18 +1,17 @@
 # STATUS
 
 ## Now
-- Build: B1
-- Milestone: M3
-- Phase: P3 — Deploy to production (**APPROVED** by human — site live at wordsearch.mjt.pub)
+- Build: B1 — **COMPLETE** (all milestones closed)
+- Milestone: M3 — closed
+- Phase: (none)
 
 ## Blockers
 - None
 
 ## Recent
-- Human.PhaseApproval — P3 approved. GitHub Pages configured, DNS verified, all features confirmed working on live site.
-- Writer.DocumentationUpdate — Updated README.md: added live URL, M3 features (20-word cap, dedup, relaxed profanity filter, responsive design, New Puzzle button, congrats banner), updated project structure.
-- PM.ThreadMaintenance — Pruned thread; promoted decisions to DECISIONS.md.
-- All M3 phases (P1–P3) implemented, code-reviewed (APPROVED), and reconciled.
+- PM.MilestoneCloseout — M3 closed. Build B1 complete. All 3 milestones delivered.
+- PM.AdvancePhase — P3 is last phase in M3; routed to MilestoneCloseout.
+- Human.PhaseApproval — P3 approved. Site live at wordsearch.mjt.pub.
 
 ## Next
-- PM.AdvancePhase (close out M3)
+- PM.ThreadMaintenance (final cleanup, then Build B1 is done)

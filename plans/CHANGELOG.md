@@ -2,23 +2,28 @@
 
 ## Unreleased
 
-### B1-M3-P3 — Deploy to production
-- Added `CNAME` file (`wordsearch.mjt.pub`) for GitHub Pages custom domain
-- Remaining deploy steps (GitHub Pages config, DNS, live verification) are human actions
+(none)
 
-### B1-M3-P2 — Visual polish & responsive design
+## Released
+
+### B1-M3 — Polish & deploy (2026-04-16)
+Milestone M3 complete — hardened input handling, polished visual design & UX, and deployed to wordsearch.mjt.pub.
+
+#### P3 — Deploy to production
+- Added `CNAME` file (`wordsearch.mjt.pub`) for GitHub Pages custom domain
+- GitHub Pages configured, DNS verified, site live at https://wordsearch.mjt.pub
+
+#### P2 — Visual polish & responsive design
 - Added favicon links (ico, apple-touch-icon, webmanifest) and Open Graph meta tags to `index.html`
 - Added responsive breakpoint at 480px: cells shrink, grid scrolls horizontally
 - Added hover/focus refinements on puzzle grid cells for better interactivity
 - Added "New Puzzle" button to reset form and clear puzzle output
 - Added congratulatory banner when all words are found (hidden in print view)
 
-### B1-M3-P1 — Input validation & edge-case hardening
+#### P1 — Input validation & edge-case hardening
 - Deduplicated words via `Set` before generation; profanity filter relaxed to allow user-entered words (filter only blocks filler-letter profanity using position-aware cell tracking)
 - Chunked `encodePayload` into 8 KB batches to avoid JS argument-limit risk
 - Added 20-word soft cap with user-facing error message
-
-## Released
 
 ### B1-M2 — Print, share & solve (2026-04-16)
 Milestone M2 complete — added print stylesheet, shareable URL hash routing, interactive solve UI, and solution toggle.
