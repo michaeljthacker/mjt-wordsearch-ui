@@ -5,13 +5,14 @@
 - Manual validation only — no test framework, no test runner, no `package.json` required
 
 ### Code style / lint
-- <placeholder>
+- (none yet)
 
 ### Architecture constraints
-- <placeholder>
+- Plain HTML/CSS/JS with ES modules — no build tools, no frameworks, no bundlers
+- Generator API contract: `generate(wordList, seed)` returns `{ grid, placements }`
 
 ### Branching convention
-- <placeholder>
+- (none yet)
 
 ### Documentation
-- <placeholder>
+- (none yet)

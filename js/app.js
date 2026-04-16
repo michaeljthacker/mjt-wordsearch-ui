@@ -4,13 +4,27 @@
  */
 
 import { generate } from "./generator.js";
-import { parseWords, showError, clearError } from "./ui.js";
+import { parseWords, showError, clearError, renderPuzzle, clearPuzzle } from "./ui.js";
+
+/**
+ * Derive a deterministic numeric seed from a word list.
+ * Same words in same order → same seed → same puzzle.
+ */
+function hashWords(words) {
+  const str = words.join(",");
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return h >>> 0; // unsigned 32-bit
+}
 
 const form = document.getElementById("puzzle-form");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   clearError();
+  clearPuzzle();
 
   const title = document.getElementById("puzzle-title").value.trim();
   const raw = document.getElementById("word-input").value;
@@ -21,11 +35,10 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  // Generator integration happens in P3; for now surface a placeholder message.
   try {
-    const result = generate(words, 0);
-    // P3 will render result.grid and result.placements here.
-    console.log("Generated puzzle:", result);
+    const seed = hashWords(words);
+    const result = generate(words, seed);
+    renderPuzzle(result.grid, result.placements, title);
   } catch (err) {
     showError(err.message);
   }
