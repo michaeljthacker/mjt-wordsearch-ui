@@ -102,6 +102,21 @@ export function initSolve(table, placements) {
       }
       solutionBtn.textContent = "All words found!";
       solutionBtn.disabled = true;
+
+      // Show congratulatory banner
+      if (!document.getElementById("congrats-banner")) {
+        const banner = document.createElement("div");
+        banner.id = "congrats-banner";
+        banner.className = "congrats-banner";
+        banner.textContent = "\u{1F389} Congratulations! You found all the words!";
+        const output = document.getElementById("puzzle-output");
+        const progress = document.getElementById("solve-progress");
+        if (progress) {
+          progress.after(banner);
+        } else {
+          output.appendChild(banner);
+        }
+      }
     } else if (showingSolution) {
       // Refresh solution highlights for remaining unfound words
       table.querySelectorAll(".puzzle-cell.solution").forEach((c) =>

@@ -134,9 +134,26 @@ export function renderShareButton(url) {
   printBtn.textContent = "\u{1F5A8} Print";
   printBtn.addEventListener("click", () => window.print());
 
+  const newBtn = document.createElement("button");
+  newBtn.className = "btn-share";
+  newBtn.type = "button";
+  newBtn.textContent = "\u{1F195} New Puzzle";
+  newBtn.addEventListener("click", () => {
+    clearPuzzle();
+    clearError();
+    document.getElementById("puzzle-title").value = "";
+    document.getElementById("word-input").value = "";
+    // Clear hash without triggering hashchange reload
+    if (location.hash) {
+      history.replaceState(null, "", location.pathname);
+    }
+    document.getElementById("word-input").focus();
+  });
+
   const wrapper = document.createElement("div");
   wrapper.className = "puzzle-actions";
   wrapper.appendChild(btn);
   wrapper.appendChild(printBtn);
+  wrapper.appendChild(newBtn);
   output.appendChild(wrapper);
 }
