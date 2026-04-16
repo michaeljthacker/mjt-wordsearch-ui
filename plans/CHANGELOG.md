@@ -1,7 +1,10 @@
 # CHANGELOG
 
 ## Unreleased
-(nothing yet)
+
+### B1-M2-P1 — Print stylesheet (2026-04-16)
+- Added `@media print` rules to `css/style.css`: hides form, errors, and heading; shows only puzzle title, grid, and word bank
+- Compact cell sizing (1.6rem) with black borders and `page-break-inside: avoid` for single-page output
 
 ## Released
 

@@ -1,10 +1,18 @@
 /**
  * app.js — Application entry point.
- * Wires up the form and orchestrates generate → render flow.
+ * Wires up the form, orchestrates generate → render flow,
+ * and handles share-link encoding/decoding via hash routing.
  */
 
 import { generate } from "./generator.js";
-import { parseWords, showError, clearError, renderPuzzle, clearPuzzle } from "./ui.js";
+import {
+  parseWords,
+  showError,
+  clearError,
+  renderPuzzle,
+  clearPuzzle,
+  renderShareButton,
+} from "./ui.js";
 
 /**
  * Derive a deterministic numeric seed from a word list.
@@ -19,16 +27,35 @@ function hashWords(words) {
   return h >>> 0; // unsigned 32-bit
 }
 
-const form = document.getElementById("puzzle-form");
+/* --- Share-link encoding / decoding (URL-safe Base64 of JSON) --- */
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+function encodePayload(title, words) {
+  const json = JSON.stringify({ t: title || "", w: words });
+  const bytes = new TextEncoder().encode(json);
+  const binary = String.fromCodePoint(...bytes);
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function decodePayload(encoded) {
+  const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(base64);
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function buildShareUrl(title, words) {
+  const encoded = encodePayload(title, words);
+  return `${location.origin}${location.pathname}#/v1/${encoded}`;
+}
+
+/* --- Core generate + render --- */
+
+function generateAndRender(words, title) {
   clearError();
   clearPuzzle();
-
-  const title = document.getElementById("puzzle-title").value.trim();
-  const raw = document.getElementById("word-input").value;
-  const words = parseWords(raw);
 
   if (words.length === 0) {
     showError("Please enter at least one word.");
@@ -39,7 +66,61 @@ form.addEventListener("submit", (e) => {
     const seed = hashWords(words);
     const result = generate(words, seed);
     renderPuzzle(result.grid, result.placements, title);
+    renderShareButton(buildShareUrl(title, words));
   } catch (err) {
     showError(err.message);
   }
+}
+
+/* --- Form handler --- */
+
+const form = document.getElementById("puzzle-form");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("puzzle-title").value.trim();
+  const raw = document.getElementById("word-input").value;
+  const words = parseWords(raw);
+
+  generateAndRender(words, title);
 });
+
+/* --- Hash-route handler --- */
+
+function handleHash() {
+  const hash = location.hash;
+  if (!hash.startsWith("#/v1/")) return;
+
+  const encoded = hash.slice("#/v1/".length);
+  if (!encoded) {
+    showError("Share link is empty — no puzzle data found.");
+    return;
+  }
+
+  try {
+    const payload = decodePayload(encoded);
+    if (!payload || !Array.isArray(payload.w) || payload.w.length === 0) {
+      showError("Invalid share link — puzzle data is missing or corrupt.");
+      return;
+    }
+    const title = typeof payload.t === "string" ? payload.t : "";
+    const words = payload.w
+      .map((w) => String(w).trim().toUpperCase())
+      .filter((w) => w.length > 0);
+    if (words.length === 0) {
+      showError("Invalid share link — no words found in puzzle data.");
+      return;
+    }
+
+    // Pre-fill form so the user can see/edit the words
+    document.getElementById("puzzle-title").value = title;
+    document.getElementById("word-input").value = words.join("\n");
+
+    generateAndRender(words, title);
+  } catch {
+    showError("Could not decode share link — the URL may be damaged or incomplete.");
+  }
+}
+
+handleHash();

@@ -94,3 +94,30 @@ export function clearPuzzle() {
   output.innerHTML = "";
   output.hidden = true;
 }
+
+/**
+ * Render a "Copy Share Link" button in the puzzle output section.
+ * @param {string} url - The share URL to copy to clipboard.
+ */
+export function renderShareButton(url) {
+  const output = document.getElementById("puzzle-output");
+  const btn = document.createElement("button");
+  btn.className = "btn-share";
+  btn.type = "button";
+  btn.textContent = "\u{1F4CB} Copy Share Link";
+  btn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = "\u2713 Copied!";
+      setTimeout(() => {
+        btn.textContent = "\u{1F4CB} Copy Share Link";
+      }, 2000);
+    } catch {
+      btn.textContent = "\u26A0 Copy failed";
+      setTimeout(() => {
+        btn.textContent = "\u{1F4CB} Copy Share Link";
+      }, 2000);
+    }
+  });
+  output.appendChild(btn);
+}
