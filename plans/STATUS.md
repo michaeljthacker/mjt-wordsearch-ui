@@ -3,15 +3,15 @@
 ## Now
 - Build: B1
 - Milestone: M1
-- Phase: n/a
+- Phase: P1
 
 ## Blockers
 - None
 
 ## Recent
-- Principal.BuildReview (re-review) — BUILD.md **approved** with interactive solve UI in scope
-- Product.ProductVision (revision) — added interactive solve UI to BUILD.md and README.md
-- Human feedback triggered scope revision for interactive solving
+- Staff.DraftQuestions — skipped (path is clear for P1 scaffolding; no ambiguities in acceptance criteria)
+- Human.ApproveMilestone — M1 **approved**, no comments. Advancing to P1.
+- Principal.MilestonePlan completed — MILESTONE.md drafted for B1-M1 (3 phases: scaffolding & input UI, generator port, grid display & integration)
 
 ## Next
-- Principal.MilestonePlan to create the M1 implementation plan
+- Staff.ImplementationExecution for B1-M1-P1
