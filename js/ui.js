@@ -54,7 +54,7 @@ export function renderPuzzle(grid, placements, title) {
   // Grid
   const table = document.createElement("table");
   table.className = "puzzle-grid";
-  table.setAttribute("role", "grid");
+  table.setAttribute("aria-label", "Word search puzzle grid");
   const tbody = document.createElement("tbody");
   for (const row of grid) {
     const tr = document.createElement("tr");
@@ -72,6 +72,7 @@ export function renderPuzzle(grid, placements, title) {
   // Word bank
   const section = document.createElement("div");
   section.className = "word-bank";
+  section.setAttribute("aria-label", "Words to find in the puzzle");
   const heading = document.createElement("h3");
   heading.textContent = "Words to Find";
   section.appendChild(heading);

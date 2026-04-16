@@ -9,7 +9,8 @@
 - None
 
 ## Recent
-- Staff.ImplementationExecution — implemented P3 (grid renderer, word bank, seed derivation, end-to-end wiring)
+- Staff.ReviewReconciliation — implemented 2 of 3 suggestions (ARIA fixes); deferred duplicate-word handling to BACKLOG
+- Principal.CodeReview — APPROVED M1 (P1+P2+P3) with no required changes; 3 non-blocking suggestions logged
 
 ## Next
-- Principal.CodeReview for M1 (last phase complete)
+- PM.StatusUpdate to close out the phase

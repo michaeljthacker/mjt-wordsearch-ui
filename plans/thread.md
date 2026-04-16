@@ -99,3 +99,65 @@ Built the grid renderer, word bank, and wired the full create → generate → d
 - Empty input → error message ✓
 - Word >15 chars → error message ✓
 - No console errors ✓
+
+---
+### [Principal.CodeReview] — 2026-04-16
+
+**Code Review — B1-M1 (P1 + P2 + P3)**
+
+**Scope:** Full milestone review covering all four source files (`index.html`, `css/style.css`, `js/generator.js`, `js/ui.js`, `js/app.js`).
+
+**Review strictness:** balanced (per `config.json`).
+
+**Reviewed against:**
+- MILESTONE.md acceptance criteria (P1, P2, P3)
+- DECISIONS.md (no automated tests; ported banned word list)
+- STANDARDS.md (plain HTML/CSS/JS with ES modules; `generate(wordList, seed)` → `{ grid, placements }`)
+- Python reference (`archive/OLD_CODE_word_search.py`)
+
+**Verdict: APPROVED — no required changes.**
+
+**Correctness:**
+- Generator algorithm is a faithful structural port of the Python reference: weighted directions, `placeWord` with 200 attempts, `fillRandomLetters`, profanity scan across rows/columns/diagonals (forward + backward), 100 grid retries — all match
+- `randint(min, max)` is inclusive on both ends, matching Python's `random.randint` semantics ✓
+- `extractLines` diagonal logic matches Python's range arithmetic exactly ✓
+- Mulberry32 PRNG is a well-known deterministic PRNG — appropriate choice ✓
+- `hashWords` in `app.js` produces a deterministic unsigned 32-bit seed from the word list ✓
+- Validation (empty list, >15 chars, non-alpha, banned words) matches Python error paths ✓
+
+**Security:**
+- All user content inserted via `textContent` — no XSS vectors ✓
+- `output.innerHTML = ""` used only for clearing, never for injecting user data ✓
+- No `eval`, no dynamic script loading, no external requests ✓
+
+**Standards compliance:**
+- Plain HTML/CSS/JS with ES modules, no build tools ✓
+- API contract `generate(wordList, seed)` → `{ grid, placements }` ✓
+- No test framework (per decision) ✓
+
+**Acceptance criteria:**
+- All P1, P2, P3 acceptance criteria addressed in implementation and verified manually per thread entries ✓
+
+**SUGGESTED improvements (non-blocking):**
+- **Duplicate words:** The generator silently accepts duplicate words in the input (same as Python). Consider deduplicating or warning the user in a future phase.
+- **Grid `role` attribute:** `role="grid"` on the `<table>` implies an interactive ARIA grid widget. For a read-only letter matrix, omitting the role (default table semantics) or using `role="table"` is more accurate. Minor accessibility nit.
+- **ARIA labels:** Adding `aria-label` to the grid table ("Word search puzzle grid") and word bank section would improve screen reader UX.
+
+All suggested items are deferred — none are blocking.
+
+---
+### [Staff.ReviewReconciliation] — 2026-04-16
+
+**Review outcome:** APPROVED (no required changes). Triaged 3 suggested items.
+
+**SUGGESTED items disposition:**
+
+1. **Duplicate words** — Deferred. Logged to BACKLOG (P1): "Deduplicate or warn on duplicate words in input." This is a behavior change best addressed in a future phase with UX consideration.
+
+2. **Grid `role` attribute** — Implemented. Removed `role="grid"` from the puzzle table. The table now uses default table semantics, which is more accurate for a read-only letter matrix.
+
+3. **ARIA labels** — Implemented. Added `aria-label="Word search puzzle grid"` to the grid table and `aria-label="Words to find in the puzzle"` to the word bank div.
+
+**Code changed:** `js/ui.js` — two lines modified (role attribute replaced with aria-label; aria-label added to word bank). Changes are cosmetic/accessibility-only; no control flow, public interfaces, or security-sensitive code was altered.
+
+**Re-review decision:** Skipping re-review. Changes are narrowly scoped attribute edits (removed one ARIA role, added two aria-labels). No logic, control flow, or API surface was changed. Per `re_review_trigger: "auto"` in config.json, this does not warrant a re-review cycle.
