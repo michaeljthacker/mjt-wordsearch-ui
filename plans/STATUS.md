@@ -2,16 +2,16 @@
 
 ## Now
 - Build: B1
-- Milestone: M1
-- Phase: P3 (all phases complete — milestone ready for closeout)
+- Milestone: M2 (approved)
+- Phase: P1 — Print stylesheet
 
 ## Blockers
 - None
 
 ## Recent
-- PM.AdvancePhase — P3 is the last phase of M1; routing to PM.MilestoneCloseout
-- Human.PhaseApproval — approved (no additional notes)
-- Writer.DocumentationUpdate — updated README.md
+- Staff.DraftQuestions — skipped (path is clear for P1 print stylesheet)
+- Human.ApproveMilestone — M2 plan approved, no changes requested
+- Principal.MilestonePlan completed — MILESTONE.md drafted for B1-M2
 
 ## Next
-- PM.MilestoneCloseout
+- Staff.ImplementationExecution for B1-M2-P1

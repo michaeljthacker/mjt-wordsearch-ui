@@ -1,42 +1,47 @@
-# MILESTONE — B1-M1
+# MILESTONE — B1-M2
 
 ## Goal
-Port the Python word search generator to JavaScript, build the grid renderer, and implement the create → generate → display flow as a static single-page app.
+Add print support, shareable URL encoding/decoding with hash-based routing, interactive solve mode (click/drag highlighting, found-word tracking), and a solution toggle.
 
 ## Phases
 
-### P1 — Project scaffolding & word input UI
-**What:** Create the project file structure (index.html, CSS, JS modules) and build the word input form. The page should have a textarea for entering words (one per line), an optional title field, and a "Generate" button. Basic page layout and styling should be in place.
+### P1 — Print stylesheet
+**What:** Add `@media print` CSS rules to `css/style.css` for a clean printed puzzle. Hide the input form, error messages, and any interactive buttons. Show only the title, grid, and word bank. Ensure the grid fits on a single page with appropriate margins and font sizing.
 **Acceptance:**
-- [ ] `index.html` loads in a browser with no errors in the console
-- [ ] A textarea, an optional title input, and a "Generate" button are visible
-- [ ] CSS provides a clean, centered layout with readable typography
-- [ ] JS module structure is established (separate files for generator, UI, and app entry point)
+- [ ] Browser print preview shows only the puzzle title, grid, and word bank — form and buttons are hidden
+- [ ] Grid table fits on a single printed page without clipping or overflow
+- [ ] Printed grid cells are legible (monospace, sufficient size) and grid lines are visible
 
-### P2 — Generator engine (Python port)
-**What:** Port the word search generator from `archive/OLD_CODE_word_search.py` to a JavaScript module. This includes a seeded PRNG, the 15×15 grid creation, weighted directional placement, word placement with overlap support, random filler letters, and profanity-filtered output. The module must be deterministic: the same word list + seed must always produce the identical grid.
+### P2 — Share URL encoding & hash routing
+**What:** Implement share-link encoding and decoding using hash-based routing (`#/v1/<encoded>`). Encode the word list and optional title into a compact URL-safe string (Base64 of JSON payload). Add a "Copy Share Link" button to the puzzle output. On page load, detect a hash route, decode the payload, regenerate the puzzle deterministically, and render it. Resolve BACKLOG P0 (hash-based routing chosen over `/v1/` paths since no server-side routing is available for a static site).
 **Acceptance:**
-- [ ] `generate(wordList, seed)` returns `{ grid, placements }` matching the Python contract
-- [ ] Seeded PRNG produces repeatable sequences (same seed → same output across calls)
-- [ ] Words are placed with weighted direction probabilities matching the Python reference
-- [ ] Filler letters are random uppercase A–Z; no banned words appear in any row, column, or diagonal (forward or backward)
-- [ ] Words exceeding 15 characters, empty lists, non-alphabetic input, and banned words are rejected with clear errors
-- [ ] Manual verification: generate a puzzle, inspect grid correctness, and confirm determinism (same input → same grid)
+- [ ] After generating a puzzle, a "Copy Share Link" button is visible in the puzzle output section
+- [ ] Clicking the button copies a URL of the form `<origin>/#/v1/<base64>` to the clipboard
+- [ ] Opening that URL in a new browser tab decodes the payload, regenerates the identical puzzle, and renders it automatically
+- [ ] If the hash payload is malformed or missing, a user-friendly error is displayed instead of a blank page
+- [ ] The input form is still accessible when arriving via a share link (user can create a new puzzle)
 
-### P3 — Grid display & end-to-end integration
-**What:** Build the grid renderer (15×15 HTML grid of letter cells) and the word bank (list of placed words). Wire the full create → generate → display flow: user enters words, clicks "Generate", the generator runs, and the grid + word bank appear on the page. The title (if provided) displays above the grid.
+### P3 — Interactive solve UI
+**What:** Add a solve mode to the rendered puzzle. Users click a starting cell then click an ending cell (or drag) to select a straight-line sequence of letters. If the selected letters match a placed word, highlight those cells as "found" and cross off the word in the word bank. Track solve progress (e.g., "3 of 8 words found"). The grid should visually distinguish found cells from unselected cells.
 **Acceptance:**
-- [ ] The grid renders as a 15×15 matrix of evenly spaced, monospaced letter cells
-- [ ] The word bank displays all placed words in a readable list
-- [ ] Clicking "Generate" with valid input produces and displays a puzzle with no page reload
-- [ ] The optional title appears above the grid when provided
-- [ ] Entering the same words twice (without changing them) produces the same grid
-- [ ] Invalid input (empty list, word too long) shows a user-facing error message instead of silently failing
-- [ ] Manual end-to-end test: enter 5+ words → click Generate → grid and word bank appear correctly
+- [ ] Clicking a start cell and an end cell selects all cells along the straight line between them
+- [ ] Only valid straight lines are selectable (horizontal, vertical, or diagonal — matching the 8 directions)
+- [ ] A correct selection highlights the cells with a persistent "found" style and crosses off the word in the word bank
+- [ ] An incorrect selection (letters don't match any remaining word) is visually rejected (selection clears, no highlight persists)
+- [ ] A progress indicator shows how many words have been found out of the total (e.g., "3 / 8 found")
+- [ ] All found-word state is visual only (no persistence across page reload required)
+
+### P4 — Solution toggle
+**What:** Add a "Show Solution" / "Hide Solution" toggle button below the puzzle. When activated, highlight all cells belonging to placed words that have not yet been found by the solver. When deactivated, remove the solution highlights (found-word highlights remain). If all words are already found, the button should indicate that.
+**Acceptance:**
+- [ ] A "Show Solution" button appears below the puzzle output after generation
+- [ ] Toggling it on highlights all unfound word placements with a distinct style (different from the "found" highlight)
+- [ ] Toggling it off removes solution highlights; found-word highlights remain intact
+- [ ] If all words have been found, the button text updates to indicate completion (e.g., "All words found!")
+- [ ] Solution toggle works correctly whether invoked before or after partial solving
 
 ## Notes / Dependencies
-- The Python reference implementation is in `archive/OLD_CODE_word_search.py` — use it as the algorithmic source of truth for P2
-- JavaScript has no built-in seeded PRNG; implement a simple deterministic PRNG (e.g., mulberry32) as part of P2
-- No build tools or frameworks — plain HTML/CSS/JS with ES modules
-- The seed for generation can be derived from the word list (e.g., a simple hash) so the same input always produces the same puzzle
-- P1 output is prerequisite for P3; P2 is logically independent of P1 but P3 depends on both
+- Hash-based routing chosen over path-based `/v1/<code>` because the app is a static site with no server-side routing — this resolves BACKLOG P0
+- The existing `hashWords()` in `app.js` ensures the same word list always produces the same seed, so share links only need to encode the word list and title
+- P3 depends on `placements` data from the generator (which includes word, row, col, direction) to validate selections
+- Duplicate-word handling (BACKLOG P1) and URL-length documentation (BACKLOG P2) remain deferred to M3

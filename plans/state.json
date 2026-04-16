@@ -3,19 +3,19 @@
   "version": "0.2",
 
   "build_id": "B1",
-  "milestone_id": "M1",
-  "phase_id": "P3",
+  "milestone_id": "M2",
+  "phase_id": "P1",
   "step_id": null,
 
   "pause_type": "continue",
 
   "last_action": {
-    "action_id": "PM.AdvancePhase",
-    "result": "ok",
-    "summary": "P3 is the last phase of M1. Routing to PM.MilestoneCloseout."
+    "action_id": "Staff.DraftQuestions",
+    "result": "skipped",
+    "summary": "P1 (Print stylesheet) path is clear — no questions. Routing to Staff.ImplementationExecution."
   },
 
-  "next_action_id": "PM.MilestoneCloseout",
+  "next_action_id": "Staff.ImplementationExecution",
 
   "blockers": [],
 
