@@ -1,7 +1,7 @@
 # BACKLOG
 
 ## P0 (do next)
-- (none)
+- Post-B2 verification — after the next deploy, confirm in a real browser that `pageView` + all five `track()` actions (`generate`, `copy_share_link`, `print`, `new_puzzle`, `show_solution`) land in `GET /analytics/report/` for `site=wordsearch.mjt.pub`.
 
 ## P1
 - Shrink share URL hashes — revisit encoding to produce shorter URLs (e.g., exploit alpha-only constraint, use a more compact encoding than Base64-of-JSON)

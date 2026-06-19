@@ -7,23 +7,23 @@
   "phase_id": null,
   "step_id": null,
 
-  "pause_type": "continue",
+  "pause_type": "decision",
 
   "last_action": {
-    "action_id": "Staff.QuickImplement",
+    "action_id": "PM.ThreadMaintenance",
     "result": "ok",
-    "summary": "MJT Analytics wired in via direct static imports from https://analytics.mjt.pub/analytics.js. init() + pageView() at startup, track() on Generate, Copy Share Link, Print, New Puzzle, Show Solution. First pass used a local wrapper module; corrected per human feedback to match the brief (no wrapping, hosted helper owns fire-and-forget)."
+    "summary": "B2 closed. Thread pruned to summary. Direct-hosted-import rule for MJT Analytics promoted to DECISIONS.md. Post-deploy verification carried forward to BACKLOG P0."
   },
 
-  "next_action_id": "PM.ThreadMaintenance",
+  "next_action_id": "Product.ProductVision",
 
   "blockers": [],
 
   "context": {
-    "goal": "Wire MJT Analytics into wordsearch.mjt.pub — pageView on load and track() on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.",
+    "goal": "Build a static, backend-free word search generator web app with create, print, share, solve, and lightweight anonymous telemetry via MJT Analytics.",
     "notes": [
-      "Build complete after ThreadMaintenance.",
-      "Manual browser smoke test pending — verify events land in /analytics/report/ for site=wordsearch.mjt.pub after deploy."
+      "B2 complete (step-only). Next build (B3) starts with Product.ProductVision when human is ready.",
+      "Open verification task: confirm analytics events in production after next deploy (BACKLOG P0)."
     ]
   }
 }
