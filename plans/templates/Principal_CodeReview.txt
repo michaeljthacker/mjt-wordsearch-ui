@@ -8,7 +8,7 @@ This is a SINGLE micro-chunk review, scoped to the most recent Phase/Step.
 
 Inputs:
 - Code changes (git diff / commits)
-- plans/config.json (workflow configuration — read `review_strictness` setting)
+- plans/config.json (workflow configuration — read `review_strictness` and `status_updates`)
 - plans/MILESTONE.md (acceptance criteria)
 - plans/DECISIONS.md (project-specific architectural choices)
 - plans/STANDARDS.md (team-level rules portable across projects)
@@ -30,6 +30,13 @@ Instructions:
    - Acceptance criteria in plans/MILESTONE.md
    - DECISIONS and STANDARDS
    - Apply the review_strictness threshold when categorizing findings
+2a) Match review depth to `size` per plans/FORMATS.md § "Prose depth scales with
+    size." Read `size` from plans/BUILD.md frontmatter (treat missing as `full`).
+    For `phase-only`, keep the review terse — a few REQUIRED/SUGGESTED bullets, no
+    multi-paragraph prose. For `single-milestone` / `full`, use current depth.
+    `step-only` shouldn't reach this action (carve-out skips it); if it does, treat
+    as `phase-only` depth and flag the routing mismatch.
+
 3) Append review feedback as a new entry in plans/thread.md.
    - Use the entry format: `---` then `### Principal.CodeReview — <date>`
    - Reference the Review Request being reviewed.
@@ -41,17 +48,24 @@ Instructions:
    - APPROVED (no required changes)
    - CHANGES REQUIRED
    - BLOCKED (requires human/product decision)
-5) Update plans/STATUS.md (mandatory):
-   - Add a bullet summarizing review outcome
+5) Update plans/STATUS.md (config-gated):
+   - Read `status_updates` from plans/config.json (default: "pm_only" if missing).
+   - If `status_updates = "every_action"`:
+     - Refresh the `**Update configuration:**` line at top
+     - Add a bullet summarizing review outcome
+   - Otherwise: SKIP. The next PM.StatusUpdate (after ReviewReconciliation) will summarize.
 6) Update plans/state.json:
-   - last_action = Principal.CodeReview
+   - last_action.action_id = Principal.CodeReview
    - If APPROVED:
+     - last_action.result = "approved"
      - pause_type = "continue"
      - next_action_id = Staff.ReviewReconciliation
    - If CHANGES REQUIRED:
+     - last_action.result = "changes_required"
      - pause_type = "continue"
      - next_action_id = Staff.ReviewReconciliation
    - If BLOCKED:
+     - last_action.result = "blocked"
      - pause_type = "decision"
      - next_action_id = Human.ResolveBlocker
      - Add blocker(s) with clear summary

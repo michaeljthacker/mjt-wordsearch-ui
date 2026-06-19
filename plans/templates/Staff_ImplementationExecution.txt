@@ -11,7 +11,7 @@ This is a SINGLE micro-chunk of execution, not an entire milestone.
 
 Inputs:
 - plans/state.json (routing + context)
-- plans/config.json (workflow configuration — read `code_review` setting)
+- plans/config.json (workflow configuration — read `code_review`, `workspace`, and `status_updates`)
 - plans/MILESTONE.md (what to build, acceptance criteria)
 - plans/thread.md (answers to questions; constraints)
 - plans/DECISIONS.md (project-specific architectural choices)
@@ -25,23 +25,42 @@ Instructions:
 2) Implement the work in code.
    - Follow plans/MILESTONE.md strictly.
    - Respect DECISIONS and STANDARDS.
+   - Multi-root workspaces: read `workspace.shared_repos` from plans/config.json.
+     Code edits inside a `shared_repos[].path` are **shared scope** and are allowed.
+     Do NOT create or modify a `plans/` directory inside a shared repo. Do NOT write
+     to a shared repo's STANDARDS.md or DECISIONS.md from this action — that path
+     goes through PM.ThreadMaintenance with explicit human approval. If the review
+     uncovers a finding that genuinely belongs in shared standards, capture it in the
+     primary repo's plans/DECISIONS.md or plans/STANDARDS.md and let the promotion
+     protocol handle it.
 3) Commit your work.
    - Minimum: ≥1 commit per Phase.
    - More commits allowed if complexity warrants.
+   - Shared-repo code edits commit inside the shared repo using its own conventions.
+   - Do NOT prefix commit messages with `--AUTO-`. That prefix is reserved for
+     automated SAM commits made by `plans/commit.ps1` so organic and automated
+     commits stay distinguishable in `git log`.
 4) Append a review request entry to plans/thread.md:
    - Use the entry format: `---` then `### Staff.ImplementationExecution — <date>`
    - Title within entry: "Review Request — <Phase ID>"
    - Include:
      - What was implemented
-     - Key files changed
+     - Key files changed (for any file inside a `workspace.shared_repos[].path`,
+       prefix the bullet with "shared scope (<repo name>):" so the workspace
+       boundary is visible in the log)
      - Acceptance criteria checklist
      - Any known risks or trade-offs
-5) Update plans/STATUS.md (mandatory):
-   - Add a bullet to Recent describing what was implemented
-   - Update Blockers if any emerged
+5) Update plans/STATUS.md (config-gated):
+   - Read `status_updates` from plans/config.json (default: "pm_only" if missing).
+   - If `status_updates = "every_action"`:
+     - Refresh the `**Update configuration:**` line at top
+     - Add a bullet to Recent describing what was implemented
+     - Update Blockers if any emerged
+   - Otherwise: SKIP. The next PM.StatusUpdate will summarize the implementation.
 6) Update plans/state.json:
-   - last_action = Staff.ImplementationExecution
+   - last_action.action_id = Staff.ImplementationExecution
    - If implementation is complete and ready for review:
+     - last_action.result = "ok"
      - Read `code_review` from plans/config.json (default: "every_phase" if missing):
        - "every_phase": pause_type = "continue", next_action_id = Principal.CodeReview
        - "every_milestone": check plans/MILESTONE.md — if this is the LAST phase in the
@@ -49,10 +68,12 @@ Instructions:
          Otherwise, pause_type = "continue", next_action_id = PM.StatusUpdate
        - "never": pause_type = "continue", next_action_id = PM.StatusUpdate
    - If you discover missing information or ambiguity:
+     - last_action.result = "ok"
      - pause_type = "continue"
      - next_action_id = Principal.AnswerQuestions
      - Add questions to plans/thread.md
    - If a product decision is required:
+     - last_action.result = "blocked"
      - pause_type = "decision"
      - next_action_id = Human.ResolveBlocker
      - Add a blocker to plans/state.json and details to plans/thread.md
