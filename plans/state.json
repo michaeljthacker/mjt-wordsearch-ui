@@ -2,28 +2,28 @@
   "$schema": "state.schema.json",
   "version": "0.2",
 
-  "build_id": "B1",
+  "build_id": "B2",
   "milestone_id": null,
   "phase_id": null,
   "step_id": null,
 
-  "pause_type": "decision",
+  "pause_type": "continue",
 
   "last_action": {
-    "action_id": "PM.ThreadMaintenance",
+    "action_id": "Staff.QuickImplement",
     "result": "ok",
-    "summary": "Thread pruned to final B1 summary. All artifacts finalized. Build B1 complete."
+    "summary": "MJT Analytics wired in: js/analytics.js wrapper, pageView() on load, track() on Generate, Copy Share Link, Print, New Puzzle, Show Solution. node --check clean on all four modified ES modules."
   },
 
-  "next_action_id": "Product.ProductVision",
+  "next_action_id": "PM.ThreadMaintenance",
 
   "blockers": [],
 
   "context": {
-    "goal": "Build a static, backend-free word search generator web app with create, print, share, and solve capabilities.",
+    "goal": "Wire MJT Analytics into wordsearch.mjt.pub — pageView on load and track() on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.",
     "notes": [
-      "B1 complete. All 3 milestones delivered.",
-      "Next build (B2) starts with Product.ProductVision when human is ready."
+      "Build complete after ThreadMaintenance.",
+      "Manual browser smoke test pending — verify events land in /analytics/report/ for site=wordsearch.mjt.pub after deploy."
     ]
   }
 }

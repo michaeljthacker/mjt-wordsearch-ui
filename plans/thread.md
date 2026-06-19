@@ -93,3 +93,18 @@ CORS_ALLOWED_ORIGINS: https://homecare.mjt.pub,https://mjt-pub-api-prod-35d1a24a
 ````
 
 As for size, try this as a step-only size, but say if that's infeasible.
+
+---
+### Staff.QuickImplement — 2026-06-18
+
+Wired MJT Analytics into the app per the brief.
+
+- New `js/analytics.js` lazily imports `https://analytics.mjt.pub/analytics.js` (no vendoring), calls `init({ site: 'wordsearch.mjt.pub', writeKey: 'htb2LQmdYzOtUofWGVt7WjXGLiNf9yfgHMPEDYqPXiE' })` once on load, and exposes `pageView` / `track` wrappers. Dynamic import + try/catch make every call fire-and-forget — a network/CORS/parse failure cannot throw into or block the host page.
+- `js/app.js`: imports the wrapper, fires `pageView()` once at module top (covers both fresh loads and direct-navigation to a share link, since the page only loads once), and fires `track('generate')` from the form submit handler.
+- `js/ui.js`: `track('copy_share_link')`, `track('print')`, `track('new_puzzle')` inside the existing button handlers in `renderShareButton`.
+- `js/solve.js`: `track('show_solution')` in the solution-toggle click handler, only when transitioning from hidden → shown.
+- `README.md`: added one line under "Tech stack" noting anonymous telemetry.
+
+Verification: `node --check` on all four modified JS files (analytics.js, app.js, ui.js, solve.js) — all parse clean as ES modules. Manual browser smoke test against the live backend was not run from this session; behavior should be verified once deployed (or via local `python -m http.server`) — confirm `pageView` and the five `track()` actions land in `GET /analytics/report/` against `site=wordsearch.mjt.pub`.
+
+Backend prereq (CORS append for `https://wordsearch.mjt.pub`) was completed by the human before this action (see thread above, Heroku `config:set` output).

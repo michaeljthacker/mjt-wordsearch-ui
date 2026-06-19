@@ -1,15 +1,17 @@
+**Update configuration:** pm_only
+
 # STATUS
 
 ## Now
-- Build: B1 — **COMPLETE**
-- Milestone: (all closed)
+- Build: B2 — MJT Analytics consumer integration (size: step-only)
+- Milestone: (none — step-only carve-out)
 - Phase: (none)
 
 ## Blockers
-- None
+- None (external CORS prerequisite for `https://wordsearch.mjt.pub` already completed per thread.md, write key confirmed)
 
 ## Recent
-- PM.ThreadMaintenance — Final thread prune. B1 build artifacts finalized.
+- Product.ProductVision — B2 opened as step-only; README.md and BUILD.md drafted
 
 ## Next
-- Start new build (B2) with Product.ProductVision when ready
+- Human.ApproveBuild — review the step-only carve-out, then Staff.QuickImplement to wire in the analytics calls

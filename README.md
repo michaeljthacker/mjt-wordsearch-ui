@@ -29,6 +29,7 @@ Enter a list of words and an optional title, click **Generate**, and get a 15×1
 - Deterministic generator ported from the Python reference in `archive/`
 - Seeded PRNG (Mulberry32) for repeatable grid generation
 - Profanity filter using a curated word list
+- Anonymous usage telemetry via [MJT Analytics](https://analytics.mjt.pub/analytics.js) (page views and named button events; no identity or session data)
 
 ## Getting started
 

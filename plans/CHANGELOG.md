@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-(none)
+- B2: Wired MJT Analytics — `pageView()` on load, `track()` on Generate, Copy Share Link, Print, New Puzzle, and Show Solution. New `js/analytics.js` lazily imports the hosted helper; all calls are fire-and-forget no-ops if loading fails.
 
 ## Released
 

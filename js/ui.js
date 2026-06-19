@@ -2,6 +2,8 @@
  * ui.js — DOM interaction helpers for the word search app.
  */
 
+import { track } from "./analytics.js";
+
 /**
  * Parse the word textarea into a cleaned array of uppercase words.
  * @param {string} raw - Raw textarea value.
@@ -117,6 +119,7 @@ export function renderShareButton(url) {
   btn.type = "button";
   btn.textContent = "\u{1F4CB} Copy Share Link";
   btn.addEventListener("click", async () => {
+    track("copy_share_link");
     try {
       await navigator.clipboard.writeText(url);
       btn.textContent = "\u2713 Copied!";
@@ -135,13 +138,17 @@ export function renderShareButton(url) {
   printBtn.className = "btn-share";
   printBtn.type = "button";
   printBtn.textContent = "\u{1F5A8} Print";
-  printBtn.addEventListener("click", () => window.print());
+  printBtn.addEventListener("click", () => {
+    track("print");
+    window.print();
+  });
 
   const newBtn = document.createElement("button");
   newBtn.className = "btn-share";
   newBtn.type = "button";
   newBtn.textContent = "\u{1F195} New Puzzle";
   newBtn.addEventListener("click", () => {
+    track("new_puzzle");
     clearPuzzle();
     clearError();
     document.getElementById("puzzle-title").value = "";

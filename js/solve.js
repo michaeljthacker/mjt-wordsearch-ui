@@ -5,6 +5,8 @@
  * word is crossed off in the word bank.
  */
 
+import { track } from "./analytics.js";
+
 /**
  * Initialize solve mode on a rendered puzzle grid.
  * @param {HTMLTableElement} table - The puzzle grid table element.
@@ -199,6 +201,7 @@ export function initSolve(table, placements) {
       showingSolution = false;
       solutionBtn.textContent = "Show Solution";
     } else {
+      track("show_solution");
       getSolutionCells().forEach((c) => c.classList.add("solution"));
       showingSolution = true;
       solutionBtn.textContent = "Hide Solution";

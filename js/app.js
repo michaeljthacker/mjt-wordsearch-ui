@@ -14,6 +14,7 @@ import {
   renderShareButton,
 } from "./ui.js";
 import { initSolve } from "./solve.js";
+import { pageView, track } from "./analytics.js";
 
 /**
  * Derive a deterministic numeric seed from a word list.
@@ -100,6 +101,8 @@ const form = document.getElementById("puzzle-form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
+  track("generate");
+
   const title = document.getElementById("puzzle-title").value.trim();
   const raw = document.getElementById("word-input").value;
   const words = parseWords(raw);
@@ -144,4 +147,5 @@ function handleHash() {
   }
 }
 
+pageView();
 handleHash();
