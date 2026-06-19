@@ -2,7 +2,7 @@
  * ui.js — DOM interaction helpers for the word search app.
  */
 
-import { track } from "./analytics.js";
+import { track } from "https://analytics.mjt.pub/analytics.js";
 
 /**
  * Parse the word textarea into a cleaned array of uppercase words.

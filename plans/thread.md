@@ -99,12 +99,13 @@ As for size, try this as a step-only size, but say if that's infeasible.
 
 Wired MJT Analytics into the app per the brief.
 
-- New `js/analytics.js` lazily imports `https://analytics.mjt.pub/analytics.js` (no vendoring), calls `init({ site: 'wordsearch.mjt.pub', writeKey: 'htb2LQmdYzOtUofWGVt7WjXGLiNf9yfgHMPEDYqPXiE' })` once on load, and exposes `pageView` / `track` wrappers. Dynamic import + try/catch make every call fire-and-forget — a network/CORS/parse failure cannot throw into or block the host page.
-- `js/app.js`: imports the wrapper, fires `pageView()` once at module top (covers both fresh loads and direct-navigation to a share link, since the page only loads once), and fires `track('generate')` from the form submit handler.
-- `js/ui.js`: `track('copy_share_link')`, `track('print')`, `track('new_puzzle')` inside the existing button handlers in `renderShareButton`.
-- `js/solve.js`: `track('show_solution')` in the solution-toggle click handler, only when transitioning from hidden → shown.
+- `js/app.js`: `import { init, pageView, track } from "https://analytics.mjt.pub/analytics.js";` then `init({ site: "wordsearch.mjt.pub", writeKey: "htb2LQmdYzOtUofWGVt7WjXGLiNf9yfgHMPEDYqPXiE" })` and `pageView()` at module top, and `track("generate")` in the form submit handler. The hosted helper owns the fire-and-forget guarantee — no local wrapper.
+- `js/ui.js`: `import { track } from "https://analytics.mjt.pub/analytics.js";` and `track("copy_share_link")`, `track("print")`, `track("new_puzzle")` inside the existing button handlers in `renderShareButton`.
+- `js/solve.js`: `import { track } from "https://analytics.mjt.pub/analytics.js";` and `track("show_solution")` in the solution-toggle click handler, only when transitioning from hidden → shown.
 - `README.md`: added one line under "Tech stack" noting anonymous telemetry.
 
-Verification: `node --check` on all four modified JS files (analytics.js, app.js, ui.js, solve.js) — all parse clean as ES modules. Manual browser smoke test against the live backend was not run from this session; behavior should be verified once deployed (or via local `python -m http.server`) — confirm `pageView` and the five `track()` actions land in `GET /analytics/report/` against `site=wordsearch.mjt.pub`.
+**Correction note:** my first pass added a local `js/analytics.js` wrapper that dynamically imported the hosted helper and re-exported swallow-the-error `pageView`/`track` shims. The human flagged this as wrong: the concept brief specifies a direct static import from the hosted URL, and the hosted helper itself preserves the fire-and-forget property. Removed the wrapper, switched all three modules to direct hosted-URL imports.
+
+Verification: `node --check` (ES-module mode) on all three modified JS files (app.js, ui.js, solve.js) — all parse clean. Static imports across files from the same URL will be deduped by the browser to one fetch. Manual browser smoke test against the live backend was not run from this session; verify once deployed (or via local `python -m http.server`) that `pageView` and the five `track()` actions land in `GET /analytics/report/` against `site=wordsearch.mjt.pub`.
 
 Backend prereq (CORS append for `https://wordsearch.mjt.pub`) was completed by the human before this action (see thread above, Heroku `config:set` output).

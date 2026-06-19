@@ -12,7 +12,7 @@
   "last_action": {
     "action_id": "Staff.QuickImplement",
     "result": "ok",
-    "summary": "MJT Analytics wired in: js/analytics.js wrapper, pageView() on load, track() on Generate, Copy Share Link, Print, New Puzzle, Show Solution. node --check clean on all four modified ES modules."
+    "summary": "MJT Analytics wired in via direct static imports from https://analytics.mjt.pub/analytics.js. init() + pageView() at startup, track() on Generate, Copy Share Link, Print, New Puzzle, Show Solution. First pass used a local wrapper module; corrected per human feedback to match the brief (no wrapping, hosted helper owns fire-and-forget)."
   },
 
   "next_action_id": "PM.ThreadMaintenance",

@@ -5,7 +5,7 @@
  * word is crossed off in the word bank.
  */
 
-import { track } from "./analytics.js";
+import { track } from "https://analytics.mjt.pub/analytics.js";
 
 /**
  * Initialize solve mode on a rendered puzzle grid.

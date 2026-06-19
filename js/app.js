@@ -14,7 +14,12 @@ import {
   renderShareButton,
 } from "./ui.js";
 import { initSolve } from "./solve.js";
-import { pageView, track } from "./analytics.js";
+import { init, pageView, track } from "https://analytics.mjt.pub/analytics.js";
+
+init({
+  site: "wordsearch.mjt.pub",
+  writeKey: "htb2LQmdYzOtUofWGVt7WjXGLiNf9yfgHMPEDYqPXiE",
+});
 
 /**
  * Derive a deterministic numeric seed from a word list.
