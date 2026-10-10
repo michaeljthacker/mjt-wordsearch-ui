@@ -11,6 +11,7 @@ Enter a list of words and an optional title, click **Generate**, and get a 15×1
 ## Current features
 
 - **Create** — Enter up to 20 words (one per line) with an optional title; duplicates are automatically removed
+- **Autofill** — Click a topic chip (e.g., animals, flowers) to append 10 random words from that topic's static word list (up to the 20-word cap); fills the title with the topic name if empty, never removes existing words, and drops any duplicates
 - **Display** — 15×15 grid of monospaced letter cells with a word bank listing all placed words
 - **Print** — Clean print layout via `@media print`; shows only the puzzle title, grid, and word bank on a single page
 - **Share** — Copy a share link (`#/v1/<base64>`) that encodes the word list and title; opening it regenerates the identical puzzle
@@ -29,7 +30,7 @@ Enter a list of words and an optional title, click **Generate**, and get a 15×1
 - Deterministic generator ported from the Python reference in `archive/`
 - Seeded PRNG (Mulberry32) for repeatable grid generation
 - Profanity filter using a curated word list
-- Anonymous usage telemetry via [MJT Analytics](https://analytics.mjt.pub/analytics.js) (page views and named button events; no identity or session data)
+- Anonymous usage telemetry via [MJT Analytics](https://analytics.mjt.pub/analytics.js) (page views and named button events, including autofill topic; no identity or session data)
 
 ## Getting started
 
@@ -53,6 +54,7 @@ js/app.js           — App entry point, form handling, share URL encoding/decod
 js/ui.js            — DOM helpers: renderPuzzle, renderShareButton, showError, clearError
 js/generator.js     — Deterministic word search engine (generate, hashWords)
 js/solve.js         — Interactive solve mode: cell selection, match checking, solution toggle
+words/<topic>.txt   — Static word lists for Autofill topics (animals, vehicles, countries, space, flowers)
 favicon/            — Favicon assets (ico, apple-touch-icon, PNGs, webmanifest)
 CNAME               — GitHub Pages custom domain (wordsearch.mjt.pub)
 ```
