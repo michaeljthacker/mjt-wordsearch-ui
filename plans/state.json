@@ -1,29 +1,23 @@
 {
   "$schema": "state.schema.json",
   "version": "0.2",
-
-  "build_id": "B2",
-  "milestone_id": null,
+  "build_id": "B4",
+  "milestone_id": "M1",
   "phase_id": null,
   "step_id": null,
-
-  "pause_type": "decision",
-
+  "pause_type": "continue",
   "last_action": {
-    "action_id": "PM.ThreadMaintenance",
+    "action_id": "PM.BuildRelease",
     "result": "ok",
-    "summary": "B2 closed. Thread pruned to summary. Direct-hosted-import rule for MJT Analytics promoted to DECISIONS.md. Post-deploy verification carried forward to BACKLOG P0."
+    "summary": "Prepared B3 release v1.1.0; runner in DEPLOYMENT.md. Next: B4."
   },
-
   "next_action_id": "Product.ProductVision",
-
   "blockers": [],
-
   "context": {
-    "goal": "Build a static, backend-free word search generator web app with create, print, share, solve, and lightweight anonymous telemetry via MJT Analytics.",
+    "goal": "Build a static, backend-free word search generator web app with create, print, share, solve, topic autofill, and lightweight anonymous telemetry via MJT Analytics.",
     "notes": [
-      "B2 complete (step-only). Next build (B3) starts with Product.ProductVision when human is ready.",
-      "Open verification task: confirm analytics events in production after next deploy (BACKLOG P0)."
+      "B3 released as v1.1.0 \u2014 write the B4 concept brief in plans/VISION.md before running Product.ProductVision.",
+      "Open verification task: confirm analytics events (incl. autofill) in production after deploy (BACKLOG P0; also in DEPLOYMENT.md smoke tests)."
     ]
   }
 }

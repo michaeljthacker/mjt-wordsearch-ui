@@ -1,6 +1,6 @@
 ---
 size: step-only
 ---
-# BUILD — B2
+# BUILD — B3
 
-Wire MJT Analytics into wordsearch.mjt.pub: import the hosted helper, call `init` + `pageView` once, and `track()` on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.
+Add topic Autofill chips to the create form: clicking a topic fetches its static word list, appends a random subset of words to the bottom of the Words field (existing words kept, duplicates dropped, 20-word cap respected), fills an empty Title with the topic name, and fires `track("autofill", { topic })`.

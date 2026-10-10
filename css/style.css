@@ -59,6 +59,35 @@ h1 {
   margin-bottom: 0.25rem;
 }
 
+.form-group .group-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.autofill-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.btn-chip {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-chip:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
 .form-group .optional,
 .form-group .hint {
   font-weight: 400;

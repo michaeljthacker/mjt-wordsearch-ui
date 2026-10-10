@@ -1,7 +1,9 @@
 # STATUS
 
+**Update configuration:** pm_only
+
 ## Now
-- Build: B2 — **COMPLETE** (size: step-only, MJT Analytics consumer integration)
+- Build: B3 — Autofill Words (size: step-only)
 - Milestone: (none — step-only carve-out)
 - Phase: (none)
 
@@ -9,8 +11,7 @@
 - None
 
 ## Recent
-- PM.ThreadMaintenance — B2 closed. Thread pruned to summary. Direct-hosted-import rule promoted to DECISIONS.md. Post-deploy verification carried forward to BACKLOG P0.
+- Product.ProductVision completed — README.md and BUILD.md drafted
 
 ## Next
-- Verify analytics events in production after the next deploy (BACKLOG P0)
-- Start B3 with Product.ProductVision when ready
+- Human.ApproveBuild (step-only carve-out skips Principal.BuildReview)

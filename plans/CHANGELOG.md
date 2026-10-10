@@ -2,9 +2,16 @@
 
 ## Unreleased
 
-- B2: Wired MJT Analytics — direct static import from `https://analytics.mjt.pub/analytics.js`, `init()` + `pageView()` on load, `track()` on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.
-
 ## Released
+
+### v1.1.0 — 2026-10-10 (B3)
+Topic Autofill for quick puzzles.
+- Topic Autofill chips (10 topics: animals, vehicles, countries, space, flowers, fruits, sports, ocean, weather, instruments) append 10 random words from `words/<topic>.txt`, fill an empty title, skip duplicates, and track `autofill`.
+- Fixed `favicon/manifest.json` and `browserconfig.xml` icon paths (were root-absolute, now relative to `favicon/`).
+
+### v1.0.1 — 2026-06-18 (B2)
+MJT Analytics telemetry. (Tagged at release; changelog entry moved here retroactively during B3 release.)
+- Wired MJT Analytics — direct static import from `https://analytics.mjt.pub/analytics.js`, `init()` + `pageView()` on load, `track()` on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.
 
 ### B1-M3 — Polish & deploy (2026-04-16)
 Milestone M3 complete — hardened input handling, polished visual design & UX, and deployed to wordsearch.mjt.pub.

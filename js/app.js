@@ -115,6 +115,51 @@ form.addEventListener("submit", (e) => {
   generateAndRender(words, title);
 });
 
+/* --- Autofill --- */
+
+const AUTOFILL_COUNT = 10;
+
+async function autofill(topic) {
+  track("autofill", { topic });
+  clearError();
+
+  const titleInput = document.getElementById("puzzle-title");
+  const wordInput = document.getElementById("word-input");
+
+  const existing = new Set(parseWords(wordInput.value));
+  const space = Math.min(AUTOFILL_COUNT, MAX_WORDS - existing.size);
+  if (space <= 0) {
+    showError(`Word list is full — ${MAX_WORDS} words maximum.`);
+    return;
+  }
+
+  let pool;
+  try {
+    const res = await fetch(`words/${topic}.txt`);
+    if (!res.ok) throw new Error(res.statusText);
+    pool = parseWords(await res.text()).filter((w) => !existing.has(w));
+  } catch {
+    showError(`Could not load the "${topic}" word list.`);
+    return;
+  }
+
+  // Fisher–Yates shuffle, then take what fits
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const added = pool.slice(0, space);
+
+  if (!titleInput.value.trim()) titleInput.value = topic;
+
+  const current = wordInput.value.replace(/\s+$/, "");
+  wordInput.value = (current ? current + "\n" : "") + added.join("\n");
+}
+
+document.querySelectorAll(".btn-chip[data-topic]").forEach((btn) => {
+  btn.addEventListener("click", () => autofill(btn.dataset.topic));
+});
+
 /* --- Hash-route handler --- */
 
 function handleHash() {
