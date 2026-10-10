@@ -8,6 +8,8 @@
 - **20-word soft cap.** Word lists exceeding 20 words are rejected with a user-facing error before generation. Keeps grid quality reasonable and share URLs manageable. (2026-04-16)
 - **Deploy to wordsearch.mjt.pub via GitHub Pages.** CNAME file in repo root; serve from `main` branch. Human handles DNS. (2026-04-16)
 - **MJT Analytics: direct hosted import, no local wrapper.** Import `init`, `pageView`, `track` directly from `https://analytics.mjt.pub/analytics.js` in each module that needs them. Do not vendor, dynamically import, or wrap in a local shim module. The hosted helper itself owns the fire-and-forget property (calls must never throw into or block the host page). **Why this matters long-term:** the hosted helper is the source of truth and is expected to evolve independently; a local wrapper would duplicate the fire-and-forget contract, mask which calls are wrapper-swallowed vs. helper-swallowed, and silently freeze us against an older API surface. (2026-06-18)
+- **Autofill topics are static word lists.** Each topic is a chip in `index.html` (`data-topic`) backed by `words/<topic>.txt`, which is fetched on click. A click appends 10 random words, skipping words already in the list and capped by space left under the 20-word cap. It fills an empty title with the topic name and sends `track("autofill", { topic })`. List entries must pass generator validation (letters only, ≤15 chars). Topic names are labels only, so they can contain spaces. (2026-10-10)
+  **Why this matters long-term:** new topics should be content-only edits, a text file plus a chip with no code change. A list word that fails validation would make Generate reject the user's puzzle after autofill, so check new lists against `^[a-z]{1,15}$`.
 
 ## Deprecated decisions
 - (none)

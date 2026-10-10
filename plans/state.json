@@ -7,16 +7,15 @@
   "step_id": null,
   "pause_type": "continue",
   "last_action": {
-    "action_id": "Staff.QuickImplement",
+    "action_id": "PM.ThreadMaintenance",
     "result": "ok",
-    "summary": "B3 Autofill implemented and browser-verified (d49f8e2): topic chips, words/<topic>.txt lists, 10-word append capped at 20, title fill, dedupe, autofill analytics event."
+    "summary": "B3 thread pruned (all entries resolved; history lives in CHANGELOG). Autofill static-word-list rule promoted to DECISIONS.md."
   },
-  "next_action_id": "PM.ThreadMaintenance",
+  "next_action_id": "PM.BuildRelease",
   "blockers": [],
   "context": {
     "goal": "Build a static, backend-free word search generator web app with create, print, share, solve, topic autofill, and lightweight anonymous telemetry via MJT Analytics.",
     "notes": [
-      "After ThreadMaintenance: proceed to PM.BuildRelease",
       "Open verification task: confirm analytics events (now including autofill) in production after next deploy (BACKLOG P0)."
     ]
   }
