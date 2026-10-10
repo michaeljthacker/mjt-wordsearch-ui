@@ -43,6 +43,8 @@ The app is live at [wordsearch.mjt.pub](https://wordsearch.mjt.pub). To run loca
    ```
 3. Open `http://localhost:3000` in a browser
 
+> **Windows note:** Python's server takes MIME types from the registry. If the console shows "Failed to load module script … MIME type of text/plain", your registry maps `.js` to `text/plain`. Fix it with `reg add HKCU\Software\Classes\.js /v "Content Type" /d text/javascript /f`, then restart the server.
+
 No dependencies to install — the app is plain HTML/CSS/JS.
 
 ## Project structure
@@ -54,7 +56,7 @@ js/app.js           — App entry point, form handling, share URL encoding/decod
 js/ui.js            — DOM helpers: renderPuzzle, renderShareButton, showError, clearError
 js/generator.js     — Deterministic word search engine (generate, hashWords)
 js/solve.js         — Interactive solve mode: cell selection, match checking, solution toggle
-words/<topic>.txt   — Static word lists for Autofill topics (animals, vehicles, countries, space, flowers)
+words/<topic>.txt   — Static word lists for Autofill topics (10 topics, e.g. animals, space, sports)
 favicon/            — Favicon assets (ico, apple-touch-icon, PNGs, webmanifest)
 CNAME               — GitHub Pages custom domain (wordsearch.mjt.pub)
 ```

@@ -3,7 +3,8 @@
 ## Unreleased
 
 - B2: Wired MJT Analytics — direct static import from `https://analytics.mjt.pub/analytics.js`, `init()` + `pageView()` on load, `track()` on Generate, Copy Share Link, Print, New Puzzle, and Show Solution.
-- B3: Topic Autofill chips (animals, vehicles, countries, space, flowers) append 10 random words from `words/<topic>.txt`, fill an empty title, skip duplicates, and track `autofill`.
+- B3: Topic Autofill chips (10 topics: animals, vehicles, countries, space, flowers, fruits, sports, ocean, weather, instruments) append 10 random words from `words/<topic>.txt`, fill an empty title, skip duplicates, and track `autofill`.
+- B3: Fixed `favicon/manifest.json` and `browserconfig.xml` icon paths (were root-absolute, now relative to `favicon/`).
 
 ## Released
 

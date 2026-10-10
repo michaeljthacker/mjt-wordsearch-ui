@@ -43,3 +43,10 @@ Added Autofill chips between Title and Words (`index.html`, `.btn-chip` in `css/
 
 Validation: `node --check` on app.js passed. A headless Chrome harness against a local static server passed: an empty list reaches 10 words, then 20, and a third click reports full; an existing title and words are kept; added words had no duplicates; Generate still renders. Screenshot reviewed. Word lists checked as `^[a-z]{1,15}$` with no duplicates. Ran against d49f8e2.
 Note: local `python -m http.server` on this machine serves `.js` as text/plain (Windows registry MIME issue), which breaks module loading. This doesn't affect GitHub Pages.
+
+---
+### Staff.QuickImplement (follow-up) — 2026-10-10
+
+At the human's request, added 5 more topics (fruits, sports, ocean, weather, instruments; 45–47 words each), for 10 in total. Also fixed `favicon/manifest.json` icon paths, which were `/android-icon-*` (site root, so 404) and are now relative to `favicon/`, plus its name. Fixed the same in `browserconfig.xml`. README now has a Windows note about the `.js` → `text/plain` registry MIME problem with `python -m http.server`.
+
+Validation: headless Chrome harness passed. All 10 chips fill 10 words and set the title, and all 6 manifest icons return 200. Word lists checked as `^[a-z]{1,15}$` with no duplicates.
