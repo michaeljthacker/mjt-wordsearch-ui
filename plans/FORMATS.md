@@ -9,10 +9,30 @@ template/placeholder content with real content. Do not preserve "About this file
 
 ---
 
+## VISION.md
+
+**What it is:** The **concept brief** — the durable seed for the Build. The human writes their project idea, intent, constraints, and any early thinking here in whatever form they have (one sentence to several paragraphs). It is the answer to "what are we building and why," captured *before* any planning artifact exists.
+**Updated by:** **Human only.** No action ever modifies `VISION.md` — it is read-only to the workflow. `Product.ProductVision` reads it as the seed for `README.md` / `BUILD.md`; `Principal.BuildReview` and `Principal.MilestonePlan` (and any later action) consult it to recover original intent. It is left **untouched, for future reference** — a stable record of the founding concept that does not get pruned or rewritten as the Build evolves.
+
+**VISION.md vs. thread.md:** `VISION.md` is the *durable* seed (original concept, never pruned). `thread.md` is *transient* working memory (questions, answers, review notes) that `PM.ThreadMaintenance` prunes over time. Put the founding idea in `VISION.md`, not `thread.md`.
+
+```
+# VISION
+
+<Free-form concept brief: what the project is, why it exists, who it's for,
+ key constraints, and any early scope or design thinking. Prose or bullets —
+ whatever the human has. May include a size hint (e.g., "size: phase-only"
+ or natural-language signals like "small fix" / "full prototype").>
+```
+
+There is no required structure — this is human input, read by AI. Keep it as the founding statement of intent; ongoing decisions belong in `DECISIONS.md` / `STANDARDS.md`, and day-to-day working memory belongs in `thread.md`.
+
+---
+
 ## BUILD.md
 
 **What it is:** The multi-milestone plan for the current Build — a Build is a major body of work on the product. Describes what is being built, why, scope boundaries, success criteria, and milestone breakdown.
-**Updated by:** Created by `Product.ProductVision`; reviewed (not modified) by `Principal.BuildReview`; updated when Build-level scope changes (including resize via `Principal.PlanDiversion`).
+**Updated by:** Created by `Product.ProductVision` (seeded from `VISION.md`); reviewed (not modified) by `Principal.BuildReview`; updated when Build-level scope changes (including resize via `Principal.PlanDiversion`).
 
 ```
 ---
@@ -43,18 +63,18 @@ size: full | single-milestone | phase-only | step-only
 
 ### Size
 
-The `size` frontmatter field is **required** and selects the planning depth for this build. It is chosen by `Product.ProductVision` (using any hint the human left in `thread.md`, or inferred from scope) and validated by `Principal.BuildReview` against the milestone breakdown. The four values:
+The `size` frontmatter field is **required** and selects the planning depth for this build. It is chosen by `Product.ProductVision` (using any hint the human left in `VISION.md`, or inferred from scope) and validated by `Principal.BuildReview` against the milestone breakdown. The four values:
 
 | `size` | Milestones | Phases per M | Steps per P | Use case |
 |---|---|---|---|---|
 | `full` | 2+ (typical 3+) | 2+ | 2+ | Full prototype / major feature. Default ceremony. |
 | `single-milestone` | exactly 1 | 2+ | 2+ | Substantial feature on an existing product. |
 | `phase-only` | exactly 1 | exactly 1 | 2+ | Small feature; one cohesive chunk of work. |
-| `step-only` | exactly 1 | exactly 1 | 1–3 | **Not a build** — cursory look, brief human check, implement. Use when the build process would cost more than the work itself (patches, dependency bumps, mechanical edits, well-scoped small fixes). Chosen by intent/risk, not step count. |
+| `step-only` | exactly 1 | exactly 1 | 1–3 | The smallest Build — cursory look, brief human check, implement. Use when the build process would cost more than the work itself (mechanical edits, well-scoped small fixes). Chosen by intent/risk, not step count. Pure upkeep with no product change (dependency/security patches) is not a Build at all — use the out-of-band `Staff.Patch`. |
 
-`step-only` uses a **carve-out route**: `Product.ProductVision` → `Human.ApproveBuild` (the one mandatory human touchpoint) → `Staff.QuickImplement` → done. It skips `Principal.BuildReview`, `Principal.MilestonePlan`, `Human.ApproveMilestone`, the Q&A loop, standalone `Principal.CodeReview` / `Staff.ReviewReconciliation`, `Writer.DocumentationUpdate`, `Human.PhaseApproval`, `PM.AdvancePhase`, and `PM.MilestoneCloseout`. Verification still happens — `Staff.QuickImplement` self-verifies — only the formal review *actions* are cut.
+`step-only` uses a **carve-out route**: `Product.ProductVision` → `Human.ApproveBuild` (the one mandatory human touchpoint) → `Staff.QuickImplement` → `PM.ThreadMaintenance` → `PM.BuildRelease`. It skips `Principal.BuildReview`, `Principal.MilestonePlan`, `Human.ApproveMilestone`, the Q&A loop, standalone `Principal.CodeReview` / `Staff.ReviewReconciliation`, `Writer.DocumentationUpdate`, `Human.PhaseApproval`, `PM.AdvancePhase`, and `PM.MilestoneCloseout`. Verification still happens — `Staff.QuickImplement` self-verifies — only the formal review *actions* are cut.
 
-The other three sizes share the standard action chain (DraftQuestions → … → PhaseApproval). `size` only caps the number of milestones, phases, and steps that downstream actions may plan, independent of all `config.json` knobs. `phase-only` has exactly one phase, so `Writer.DocumentationUpdate` is skipped (`PM.AdvancePhase` short-circuits to `PM.MilestoneCloseout` and there is nothing to document yet at that point — closeout's CHANGELOG entry covers it).
+The other three sizes share the standard action chain (DraftQuestions → … → PhaseApproval). `size` only caps the number of milestones, phases, and steps that downstream actions may plan, independent of all `config.json` knobs. `phase-only` has exactly one phase, so `Writer.DocumentationUpdate` is skipped (`PM.AdvancePhase` goes straight to its inline milestone closeout and there is nothing to document yet at that point — closeout's CHANGELOG entry covers it).
 
 ### Prose depth scales with size
 
@@ -142,7 +162,7 @@ _(STATUS updates disabled via config: status_updates=never)_
 ## BACKLOG.md
 
 **What it is:** Prioritized list of pending work, bugs, follow-ups, and tech debt.
-**Updated by:** `PM.StatusUpdate`, `PM.MilestoneCloseout`, `Staff.ReviewReconciliation` (when logging tech debt); also when priorities change or new work is discovered.
+**Updated by:** `PM.StatusUpdate`, milestone closeout (`PM.AdvancePhase` inline, or `PM.MilestoneCloseout`), `Staff.ReviewReconciliation` (when logging tech debt), `Staff.Patch` (upgrades too big for a patch); also when priorities change or new work is discovered.
 
 **Key rule:** BACKLOG tracks **future work items only**. Do not use BACKLOG for in-progress status, remaining tasks in the current phase, or implementation details. Those belong in `state.json` (e.g., `context.notes`) and `thread.md` respectively.
 
@@ -164,7 +184,11 @@ _(STATUS updates disabled via config: status_updates=never)_
 ## CHANGELOG.md
 
 **What it is:** Human-readable record of changes, including brief rationale for notable decisions.
-**Updated by:** `PM.StatusUpdate` (per Phase), `PM.MilestoneCloseout` (appends milestone-complete entry under Unreleased). The "Unreleased" → "Released" move belongs to BUILD release, not milestone closeout — milestones are *completed*, not released.
+**Updated by:** `PM.StatusUpdate` (per Phase), milestone closeout — `PM.AdvancePhase` inline or `PM.MilestoneCloseout` (appends "Milestone <Build>-<Milestone> complete" under Unreleased), `PM.BuildRelease` (moves Unreleased → Released), `Staff.Patch` (adds its own patch release section).
+
+- Milestones are *completed*, not released. Only `PM.BuildRelease` moves "Unreleased" items into "Released", as a new top section `### vX.Y.Z — YYYY-MM-DD (<Build ID>)`, leaving "Unreleased" empty.
+- `Staff.Patch` never touches "Unreleased" (it belongs to the in-flight Build). It adds `### vX.Y.Z — YYYY-MM-DD (patch)` at the top of "Released"; if no version was bumped, its lines go under "Unreleased" prefixed `Patch:`.
+- Newest Released section first.
 
 ```
 # CHANGELOG
@@ -173,8 +197,51 @@ _(STATUS updates disabled via config: status_updates=never)_
 - <item>
 
 ## Released
-### YYYY-MM-DD
+### vX.Y.Z — YYYY-MM-DD (B<n>)
 - <item>
+```
+
+---
+
+## DEPLOYMENT.md
+
+**What it is:** The deployment runner for a deployed repo — what the human executes to ship a release. Lives at the **repo root** (not in `plans/`): one per deployed repo, including deployed shared repos in a multi-root workspace. Human/AI-owned like README; not synced or scaffolded by `sam-update.py`.
+**Updated by:** `PM.BuildRelease` — scaffolds it on the first release, then patches it each release. `Staff.Patch` reads it (for standing steps) but does not edit it.
+
+**Key rules:**
+- **Standing sections** are durable; edit them only when a Build changes how deployment works.
+- **Current release** is rewritten each release. Older releases are not kept here — CHANGELOG and git tags hold that history.
+- **The AI prepares, the human ships.** Tags are created by the human after final commits land, pointing at the deployed commit.
+- **Never write secret values.** Name env vars and where they are set; never their values.
+- Unknowns are marked `TODO (human): …`, never invented. Omit sections that don't apply; keep it as short as the project allows.
+
+```
+# DEPLOYMENT — <repo name>
+
+## Environments
+- <name> — <where it runs, URL, how it's deployed>
+
+## Prerequisites
+- <access, tools, credentials the deployer needs — names only>
+
+## Deploy steps
+1. <standing steps>
+
+## Smoke tests
+- <standing checks after any deploy>
+
+## Rollback
+- <standing rollback procedure>
+
+## Current release — vX.Y.Z (<Build ID>, YYYY-MM-DD)
+- [ ] Merge PR(s) to `main`: <links/branches>
+- [ ] Env var changes: <NAME — add/change/remove — environment>
+- [ ] Migrations: <order, backup first, reversible?>
+- [ ] Deploy: <deltas from the standing steps>
+- [ ] Tag `vX.Y.Z` on the deployed commit (+ GitHub release / publish if used)
+- [ ] Smoke tests for this release: <targeted checks>
+- Rollback for this release: <specifics, incl. migration/data caveats>
+- Multi-root: deploy order across repos, if more than one
 ```
 
 ---
@@ -249,12 +316,12 @@ Every entry MUST include a `**Why this matters long-term:**` line. If you can't 
 
 ## thread.md — Append-Only Protocol
 
-**What it is:** Active working memory for the project — a chronological log of questions, answers, review requests, feedback, and decisions. AI-readable, not machine-parseable.
+**What it is:** Active working memory for the project — a chronological log of questions, answers, review requests, feedback, and decisions. AI-readable, not machine-parseable. (The *founding concept* lives in `VISION.md`, not here — see the VISION.md section above.)
 **Updated by:** Most actions append to it; only `PM.ThreadMaintenance` may prune or restructure.
 
 `thread.md` is an **append-only chronological log**. It is not a structured document
 with permanent sections. Each action that writes to `thread.md` appends a new entry
-at the end.
+**at the bottom**.
 
 ### Entry format
 
@@ -266,15 +333,28 @@ at the end.
 
 ### Rules
 
-1. **Append only.** Never delete, modify, or reorder existing entries.
-2. **PM.ThreadMaintenance is the sole exception.** It may prune resolved content,
-   compress verbose back-and-forth into brief summaries, and promote durable decisions
-   to DECISIONS.md or STANDARDS.md.
-3. **Use Q-### IDs for questions** (e.g., Q-001). Reference them by ID when answering.
-4. **Review Requests and review feedback are separate entries.** Staff appends the
+1. **New entries go at the bottom.** The log is chronological, oldest-first. Never
+   prepend at the top or interleave with older entries.
+2. **No sub-sections, grouping, or status buckets.** Do not create "Resolved",
+   "Open Issues", "Summary", or any other grouping headers. The only headers are the
+   per-entry `### [Action.ID] — YYYY-MM-DD` titles. The log is a flat sequence of entries.
+3. **Append only.** Never delete, modify, or reorder existing entries.
+4. **PM.ThreadMaintenance is the sole exception, and it prunes by deletion.** When
+   content is resolved it is **deleted**, not archived in-file. There is no "resolved
+   summary" block. Durable content is promoted out of the thread to its permanent home
+   (DECISIONS.md, STANDARDS.md, CHANGELOG, or README) before deletion; everything else
+   is simply removed. No historical-summary narrative lives here — the CHANGELOG owns
+   project history.
+5. **Use Q-### IDs for questions** (e.g., Q-001). Reference them by ID when answering.
+6. **Review Requests and review feedback are separate entries.** Staff appends the
    request; Principal appends the feedback as the next entry, referencing the request.
-5. **Keep entries concise and actionable.** The thread will be pruned periodically,
+7. **Keep entries concise and actionable.** The thread will be pruned periodically,
    but shorter entries delay the need for maintenance.
+8. **Record validation once.** An action that runs checkpoint validation (full suite +
+   required gates) ends its entry with a `Validation:` line — commands, result, and the
+   commit it ran against. Later actions reuse it rather than re-running checks on
+   unchanged code (see `plans/agent-instructions.md` § "Validation scope").
+   e.g. `Validation: pytest (412 passed), ruff + mypy clean — at a1b2c3d`
 
 ---
 
@@ -286,11 +366,11 @@ at the end.
 ```
 {
   "$schema": "config.schema.json",
-  "code_review": "every_phase",
-  "formal_approval": "every_phase",
+  "code_review": "every_milestone",
+  "formal_approval": "every_milestone",
   "documentation_update": "every_milestone",
   "review_strictness": "balanced",
-  "re_review_trigger": "required",
+  "re_review_trigger": "auto",
   "status_updates": "pm_only",
   "workspace": {
     "primary_repo": {
@@ -307,11 +387,11 @@ at the end.
 
 | Key | Options | Default | Effect |
 |-----|---------|---------|--------|
-| `code_review` | `every_phase` \| `every_milestone` \| `never` | `every_phase` | When Principal.CodeReview runs after implementation |
-| `formal_approval` | `every_phase` \| `every_milestone` \| `never` | `every_phase` | When Human.PhaseApproval runs |
+| `code_review` | `every_phase` \| `every_milestone` \| `never` | `every_milestone` | When Principal.CodeReview runs after implementation (under `every_milestone`, reviews all phases of the milestone) |
+| `formal_approval` | `every_phase` \| `every_milestone` \| `never` | `every_milestone` | When Human.PhaseApproval runs (under `every_milestone`, briefs the whole milestone) |
 | `documentation_update` | `every_phase` \| `every_milestone` \| `never` | `every_milestone` | When Writer.DocumentationUpdate runs |
 | `review_strictness` | `strict` \| `balanced` \| `pragmatic` | `balanced` | Threshold for REQUIRED vs. SUGGESTED in code review |
-| `re_review_trigger` | `required` \| `auto` | `required` | Whether code changes in reconciliation always trigger re-review |
+| `re_review_trigger` | `required` \| `auto` | `auto` | Whether code changes in reconciliation always trigger re-review |
 | `status_updates` | `every_action` \| `pm_only` \| `every_milestone` \| `never` | `pm_only` | How often STATUS.md is written. `pm_only` and below write only via `PM.StatusUpdate` (routing fans approvals/diversions through it so major transitions are still captured) |
 | `workspace` | object | single-repo placeholder | Multi-root workspace definition (primary repo + shared repos) |
 
@@ -327,8 +407,9 @@ across them. The block has two parts:
   - `name` — human-readable name
   - `path` — absolute or workspace-relative path to the repo root
   - `owns_plans` — must be `true`
-- `shared_repos` (optional, default `[]`) — repos that may receive code edits and
-  `STANDARDS.md` / `DECISIONS.md` updates without their own `plans/` wrapper.
+- `shared_repos` (optional, default `[]`) — repos that may receive code edits, a
+  `DEPLOYMENT.md`, and `STANDARDS.md` / `DECISIONS.md` updates without their own
+  `plans/` wrapper.
   - `name` / `path` / `role` — name, root path, and a brief description of the repo's role
 
 **Explicit-identification rule:** SAM never infers the primary repo from cwd or `"."`.
@@ -347,6 +428,7 @@ route it accordingly. There are two scopes:
   - Code under `shared_repos[].path`
   - `shared_repos[].path/STANDARDS.md`
   - `shared_repos[].path/DECISIONS.md`
+  - `shared_repos[].path/DEPLOYMENT.md` (written by `PM.BuildRelease` only)
   - **No `plans/` wrapper** — shared repos never receive a `plans/` directory.
 
 **Detection rule:** scope is determined by **path match**. If an edit's path is inside
@@ -364,7 +446,7 @@ human approval — see `PM_ThreadMaintenance.txt` for the proposal/approval prot
 ## state.json
 
 **What it is:** Routing source of truth — tracks the current position in the BUILD → MILESTONE → PHASE → STEP hierarchy and determines which action runs next. Validated by `state.schema.json`.
-**Updated by:** Every action (mandatory). Must always reflect what just happened and what should happen next.
+**Updated by:** Every action (mandatory), except out-of-band actions (`Staff.Patch`), which never touch it. Must always reflect what just happened and what should happen next.
 
 ### `last_action.result` values
 
@@ -372,9 +454,29 @@ The `result` field MUST be one of these schema-valid enum values. Do NOT use "co
 
 | Value | When to use |
 |-------|-------------|
-| `ok` | Action completed successfully. Default for most actions (ProductVision, MilestonePlan, DraftQuestions, AnswerQuestions, ImplementationExecution, ReviewReconciliation, StatusUpdate, DocumentationUpdate, AdvancePhase, MilestoneCloseout, ThreadMaintenance, ResolveBlocker). |
+| `ok` | Action completed successfully. Default for most actions (ProductVision, MilestonePlan, DraftQuestions, AnswerQuestions, ImplementationExecution, ReviewReconciliation, StatusUpdate, DocumentationUpdate, AdvancePhase, MilestoneCloseout, BuildRelease, ThreadMaintenance, ResolveBlocker). |
 | `approved` | A review or approval action approved the artifact (BuildReview, CodeReview, PhaseApproval, ApproveMilestone). |
 | `changes_required` | A review found issues that must be addressed before proceeding (BuildReview, CodeReview). |
 | `blocked` | Action cannot proceed; a blocker has been added to `blockers[]`. |
 | `error` | Unexpected failure occurred; `Human.ResolveBlocker` is next. |
-| `skipped` | Action was intentionally skipped (e.g., DraftQuestions self-skip when path is clear, DocumentationUpdate when no doc changes needed). |
+| `skipped` | Action was intentionally skipped (e.g., DraftQuestions self-skip when path is clear, DocumentationUpdate when no doc changes needed, MilestoneCloseout when the milestone was already closed). |
+
+### `last_action.summary` guidance
+
+`summary` is a plain, factual description of **what was done** — not a defense of *how* it
+was handled. State the action and its concrete result; keep the useful specifics (what
+changed, current position, what runs next). Aim short and factual: most summaries need
+one or two sentences. Don't over-correct into cryptic terseness — a summary should still
+read as a sentence.
+
+**Omit** meta-justification that is already derivable from `config.json` + `state.json`:
+- Config-value citations used to explain a *non-action* — e.g. `(status_updates=pm_only)`
+  to justify not touching STATUS.md, or `(code_review=every_milestone)` to justify skipping review.
+- "No X changes because…" explanations for things that simply didn't happen.
+- `pause_type` reasoning (the `pause_type` field already carries it).
+
+```
+✅ "Implemented search pagination; 3 files changed. Next: Principal.CodeReview."
+❌ "Implemented search pagination. Did not update STATUS.md because status_updates=pm_only,
+    and set pause_type=continue since the next actor is not Human.*. No config changes."
+```
