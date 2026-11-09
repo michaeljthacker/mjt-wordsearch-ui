@@ -1,0 +1,12 @@
+# BEGIN SAM MANAGED
+/plans/*
+!/plans/BACKLOG.md
+!/plans/BUILD.md
+!/plans/CHANGELOG.md
+!/plans/DECISIONS.md
+!/plans/MILESTONE.md
+!/plans/STANDARDS.md
+!/plans/VISION.md
+/CLAUDE.md
+/.github/copilot-instructions.md
+# END SAM MANAGED

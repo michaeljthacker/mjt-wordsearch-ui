@@ -1,1 +1,0 @@
-This repository uses the SAM workflow. Follow the project workflow and agent instructions in `plans/agent-instructions.md`.
